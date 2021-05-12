@@ -7,4 +7,7 @@ const add = async (user) => {
 const insert = async (user) => add(user);
 
 const getAll = async () => users;
-module.exports = { add, insert, getAll };
+
+const getById = async (id) => users.find((user) => user.id === id);
+
+module.exports = { add, insert, getAll, getById };

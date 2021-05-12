@@ -9,4 +9,6 @@ const create = async (payload) => {
 
 const getAll = () => usersRepo.getAll();
 
-module.exports = { create, getAll };
+const getById = (id) => usersRepo.getById(id);
+
+module.exports = { create, getAll, getById };
