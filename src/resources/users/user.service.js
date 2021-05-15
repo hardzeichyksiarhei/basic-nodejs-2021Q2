@@ -1,18 +1,13 @@
-const usersRepo = require('./user.memory.repository');
 const User = require('./user.model');
 
-const create = async (payload) => {
-  const user = User.create(payload);
-  const userInserted = await usersRepo.insert(user);
-  return userInserted;
-};
+const create = async (payload) => User.create(payload);
 
-const getAll = () => usersRepo.getAll();
+const getAll = () => User.getAll();
 
-const getById = (id) => usersRepo.getById(id);
+const getById = (id) => User.getById(id);
 
-const updateById = async (id, payload) => usersRepo.updateById(id, payload);
+const updateById = async (id, payload) => User.updateById(id, payload);
 
-const deleteById = async (id) => usersRepo.deleteById(id);
+const deleteById = async (id) => User.deleteById(id);
 
 module.exports = { create, getAll, getById, updateById, deleteById };

@@ -31,7 +31,7 @@ exports.getById = catchErrors(async (req, res) => {
 
 exports.updateById = catchErrors(async (req, res) => {
   const user = await usersService.updateById(req.params.userId, req.body);
-  if (user === -1) {
+  if (!user) {
     return res
       .status(StatusCodes.NOT_FOUND)
       .json({ code: 'USER_NOT_FOUND', msg: 'User not found' });
@@ -41,7 +41,7 @@ exports.updateById = catchErrors(async (req, res) => {
 
 exports.deleteById = catchErrors(async (req, res) => {
   const user = await usersService.deleteById(req.params.userId);
-  if (user === -1) {
+  if (!user) {
     return res
       .status(StatusCodes.NOT_FOUND)
       .json({ code: 'USER_NOT_FOUND', msg: 'User not found' });
