@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const { v4: uuid } = require('uuid');
 
+const usersRepo = require('./user.memory.repository');
+
 class User {
   constructor({
     id = uuid(),
@@ -14,15 +16,40 @@ class User {
     this.password = bcrypt.hashSync(password, 10);
   }
 
-  static create(payload) {
-    return new this(payload);
+  static async create(payload) {
+    const user = new this(payload);
+    const userInserted = await usersRepo.insert(user);
+    return userInserted;
   }
 
-  update(payload) {
+  static async getAll(id) {
+    const users = await usersRepo.getAll(id);
+    return users;
+  }
+
+  static async getById(id) {
+    const user = await usersRepo.getById(id);
+    return user;
+  }
+
+  static async updateById(id, payload) {
+    const user = await usersRepo.getById(id);
+    const userUpdated = user?.update(payload);
+    return userUpdated;
+  }
+
+  async update(payload) {
     const { name, login, password } = payload;
     if (name) this.name = name;
     if (login) this.login = login;
     if (password) this.password = bcrypt.hashSync(password, 10);
+
+    return this;
+  }
+
+  static async deleteById(id) {
+    const user = await usersRepo.deleteById(id);
+    return user;
   }
 
   static toResponse(user) {
