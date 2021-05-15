@@ -23,6 +23,11 @@ exports.getById = async (req, res) => {
   return res.status(StatusCodes.OK).json(User.toResponse(user));
 };
 
+exports.updateById = async (req, res) => {
+  const user = await usersService.updateById(req.params.userId, req.body);
+  res.status(StatusCodes.OK).json(user && User.toResponse(user));
+};
+
 exports.deleteById = async (req, res) => {
   const user = await usersService.deleteById(req.params.userId);
   if (!user) {

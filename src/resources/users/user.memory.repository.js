@@ -10,7 +10,15 @@ const getAll = async () => users;
 
 const getById = async (id) => users.find((user) => user.id === id);
 
-const destroy = async (id) => {
+const updateById = async (id, payload) => {
+  const idx = users.findIndex((user) => user.id === id);
+  if (idx === -1) return -1;
+  const userUpdatable = users[idx];
+  userUpdatable.update(payload);
+  return userUpdatable;
+};
+
+const deleteById = async (id) => {
   const idx = users.findIndex((user) => user.id === id);
   if (idx === -1) return -1;
   const userDeletable = users[idx];
@@ -18,4 +26,4 @@ const destroy = async (id) => {
   return userDeletable;
 };
 
-module.exports = { add, insert, getAll, getById, destroy };
+module.exports = { add, insert, getAll, getById, updateById, deleteById };
