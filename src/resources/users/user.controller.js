@@ -26,12 +26,17 @@ exports.getById = catchErrors(async (req, res) => {
 
 exports.updateById = catchErrors(async (req, res) => {
   const user = await usersService.updateById(req.params.userId, req.body);
-  res.status(StatusCodes.OK).json(user && User.toResponse(user));
+  if (user === -1) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ code: 'USER_NOT_FOUND', msg: 'User not found' });
+  }
+  return res.status(StatusCodes.OK).json(user && User.toResponse(user));
 });
 
 exports.deleteById = catchErrors(async (req, res) => {
   const user = await usersService.deleteById(req.params.userId);
-  if (!user) {
+  if (user === -1) {
     return res
       .status(StatusCodes.NOT_FOUND)
       .json({ code: 'USER_NOT_FOUND', msg: 'User not found' });
