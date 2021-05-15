@@ -14,6 +14,13 @@ class User {
     this.password = bcrypt.hashSync(password, 10);
   }
 
+  update(payload) {
+    const { name, login, password } = payload;
+    if (name) this.name = name;
+    if (login) this.login = login;
+    if (password) this.password = bcrypt.hashSync(password, 10);
+  }
+
   static toResponse(user) {
     const { id, name, login } = user;
     return { id, name, login };

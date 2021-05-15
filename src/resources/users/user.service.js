@@ -11,6 +11,8 @@ const getAll = () => usersRepo.getAll();
 
 const getById = (id) => usersRepo.getById(id);
 
-const deleteById = async (id) => usersRepo.destroy(id);
+const updateById = async (id, payload) => usersRepo.updateById(id, payload);
 
-module.exports = { create, getAll, getById, deleteById };
+const deleteById = async (id) => usersRepo.deleteById(id);
+
+module.exports = { create, getAll, getById, updateById, deleteById };
