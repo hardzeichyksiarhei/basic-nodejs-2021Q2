@@ -6,6 +6,11 @@ const usersService = require('./user.service');
 
 exports.create = catchErrors(async (req, res) => {
   const user = await usersService.create(req.body);
+  if (!user) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ code: 'USER_NOT_CREATE', msg: 'User not create' });
+  }
   return res.status(StatusCodes.CREATED).json(User.toResponse(user));
 });
 
