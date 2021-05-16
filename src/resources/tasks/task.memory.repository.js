@@ -9,6 +9,8 @@ const insert = async (task) => add(task);
 
 const getAll = async () => tasks;
 
+const getById = async (id) => tasks.find((task) => task.id === id);
+
 const getAllByBoardId = async (boardId) =>
   tasks.filter((task) => task.boardId === boardId);
 
@@ -29,6 +31,7 @@ module.exports = {
   add,
   insert,
   getAll,
+  getById,
   getAllByBoardId,
   getByBoardIdAndTaskId,
   deleteByBoardIdAndTaskId,
