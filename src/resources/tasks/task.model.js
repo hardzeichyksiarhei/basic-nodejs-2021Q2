@@ -37,22 +37,34 @@ class Task {
     return task;
   }
 
+  static async updateById(id, payload) {
+    const task = await tasksRepo.getById(id);
+    const taskUpdated = await task?.update(payload);
+    return taskUpdated;
+  }
+
   static async updateByBoardIdAndTaskId({ boardId, taskId }, payload) {
     const task = await tasksRepo.getByBoardIdAndTaskId(boardId, taskId);
-    const taskUpdated = task?.update(payload);
+    const taskUpdated = await task?.update(payload);
     return taskUpdated;
   }
 
   async update(payload) {
     const { title, order, description, userId, boardId, columnId } = payload;
-    if (title) this.title = title;
-    if (order) this.order = order;
-    if (description) this.description = description;
-    if (userId) this.userId = userId;
-    if (boardId) this.boardId = boardId;
-    if (columnId) this.columnId = columnId;
+    if (title !== undefined) this.title = title;
+    if (order !== undefined) this.order = order;
+    if (description !== undefined) this.description = description;
+    if (userId !== undefined) this.userId = userId;
+    if (boardId !== undefined) this.boardId = boardId;
+    if (columnId !== undefined) this.columnId = columnId;
 
     return this;
+  }
+
+  static async findAll(callback) {
+    if (typeof callback !== 'function') return null;
+    const tasks = await tasksRepo.getAll();
+    return tasks.filter(callback);
   }
 
   clone() {

@@ -33,8 +33,8 @@ class Board {
 
   async update(payload) {
     const { title, columns } = payload;
-    if (title) this.title = title;
-    if (columns) this.columns = columns;
+    if (title !== undefined) this.title = title;
+    if (columns !== undefined) this.columns = columns;
 
     return this;
   }
