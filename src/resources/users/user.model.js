@@ -40,9 +40,9 @@ class User {
 
   async update(payload) {
     const { name, login, password } = payload;
-    if (name) this.name = name;
-    if (login) this.login = login;
-    if (password) this.password = bcrypt.hashSync(password, 10);
+    if (name !== undefined) this.name = name;
+    if (login !== undefined) this.login = login;
+    if (password !== undefined) this.password = bcrypt.hashSync(password, 10);
 
     return this;
   }
