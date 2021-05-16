@@ -10,7 +10,7 @@ class Board {
   }
 
   static async create(payload) {
-    const board = new this(payload);
+    const board = new Board(payload);
     const boardInserted = await boardsRepo.insert(board);
     return boardInserted;
   }
@@ -33,10 +33,14 @@ class Board {
 
   async update(payload) {
     const { title, columns } = payload;
-    if (title) this.name = title;
+    if (title) this.title = title;
     if (columns) this.columns = columns;
 
     return this;
+  }
+
+  clone() {
+    return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
   }
 
   static async deleteById(id) {
