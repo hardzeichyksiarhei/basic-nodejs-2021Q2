@@ -15,8 +15,8 @@ class Board {
     return boardInserted;
   }
 
-  static async getAll(id) {
-    const boards = await boardsRepo.getAll(id);
+  static async getAll() {
+    const boards = await boardsRepo.getAll();
     return boards;
   }
 
