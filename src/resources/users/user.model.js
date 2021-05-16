@@ -17,7 +17,7 @@ class User {
   }
 
   static async create(payload) {
-    const user = new this(payload);
+    const user = new User(payload);
     const userInserted = await usersRepo.insert(user);
     return userInserted;
   }
@@ -45,6 +45,10 @@ class User {
     if (password) this.password = bcrypt.hashSync(password, 10);
 
     return this;
+  }
+
+  clone() {
+    return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
   }
 
   static async deleteById(id) {
