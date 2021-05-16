@@ -27,18 +27,18 @@ class Task {
     return taskInserted;
   }
 
-  static async getAll(id) {
-    const tasks = await tasksRepo.getAll(id);
+  static async getAllByBoardId(boardId) {
+    const tasks = await tasksRepo.getAllByBoardId(boardId);
     return tasks;
   }
 
-  static async getById(id) {
-    const task = await tasksRepo.getById(id);
+  static async getByBoardIdAndTaskId(boardId, taskId) {
+    const task = await tasksRepo.getByBoardIdAndTaskId(boardId, taskId);
     return task;
   }
 
-  static async updateById(id, payload) {
-    const task = await tasksRepo.getById(id);
+  static async updateByBoardIdAndTaskId({ boardId, taskId }, payload) {
+    const task = await tasksRepo.getByBoardIdAndTaskId(boardId, taskId);
     const taskUpdated = task?.update(payload);
     return taskUpdated;
   }
@@ -49,8 +49,8 @@ class Task {
     if (order) this.order = order;
     if (description) this.description = description;
     if (userId) this.userId = userId;
-    if (boardId) this.userId = boardId;
-    if (columnId) this.userId = columnId;
+    if (boardId) this.boardId = boardId;
+    if (columnId) this.columnId = columnId;
 
     return this;
   }
@@ -59,8 +59,8 @@ class Task {
     return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
   }
 
-  static async deleteById(id) {
-    const task = await tasksRepo.deleteById(id);
+  static async deleteByBoardIdAndTaskId(boardId, taskId) {
+    const task = await tasksRepo.deleteByBoardIdAndTaskId(boardId, taskId);
     return task;
   }
 

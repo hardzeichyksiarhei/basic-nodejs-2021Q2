@@ -9,14 +9,27 @@ const insert = async (task) => add(task);
 
 const getAll = async () => tasks;
 
-const getById = async (id) => tasks.find((task) => task.id === id);
+const getAllByBoardId = async (boardId) =>
+  tasks.filter((task) => task.boardId === boardId);
 
-const deleteById = async (id) => {
-  const idx = tasks.findIndex((task) => task.id === id);
+const getByBoardIdAndTaskId = async (boardId, taskId) =>
+  tasks.find((task) => task.boardId === boardId && task.id === taskId);
+
+const deleteByBoardIdAndTaskId = async (boardId, taskId) => {
+  const idx = tasks.findIndex(
+    (task) => task.boardId === boardId && task.id === taskId
+  );
   if (idx === -1) return null;
   const taskDeletable = tasks[idx];
   tasks.splice(idx, 1);
   return taskDeletable;
 };
 
-module.exports = { add, insert, getAll, getById, deleteById };
+module.exports = {
+  add,
+  insert,
+  getAll,
+  getAllByBoardId,
+  getByBoardIdAndTaskId,
+  deleteByBoardIdAndTaskId,
+};

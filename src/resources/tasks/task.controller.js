@@ -5,7 +5,7 @@ const catchErrors = require('../../common/catchErrors');
 const tasksService = require('./task.service');
 
 exports.create = catchErrors(async (req, res) => {
-  const task = await tasksService.create(req.body);
+  const task = await tasksService.create(req.body, req.params);
   if (!task) {
     return res
       .status(StatusCodes.BAD_REQUEST)
@@ -14,13 +14,13 @@ exports.create = catchErrors(async (req, res) => {
   return res.status(StatusCodes.CREATED).json(Task.toResponse(task));
 });
 
-exports.getAll = catchErrors(async (req, res) => {
-  const tasks = await tasksService.getAll();
+exports.getAllByBoardId = catchErrors(async (req, res) => {
+  const tasks = await tasksService.getAllByBoardId(req.params);
   return res.status(StatusCodes.OK).json(tasks.map(Task.toResponse));
 });
 
-exports.getById = catchErrors(async (req, res) => {
-  const task = await tasksService.getById(req.params.taskId);
+exports.getByBoardIdAndTaskId = catchErrors(async (req, res) => {
+  const task = await tasksService.getByBoardIdAndTaskId(req.params);
   if (!task) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -29,8 +29,11 @@ exports.getById = catchErrors(async (req, res) => {
   return res.status(StatusCodes.OK).json(Task.toResponse(task));
 });
 
-exports.updateById = catchErrors(async (req, res) => {
-  const task = await tasksService.updateById(req.params.taskId, req.body);
+exports.updateByBoardIdAndTaskId = catchErrors(async (req, res) => {
+  const task = await tasksService.updateByBoardIdAndTaskId(
+    req.params,
+    req.body
+  );
   if (!task) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -39,8 +42,8 @@ exports.updateById = catchErrors(async (req, res) => {
   return res.status(StatusCodes.OK).json(task && Task.toResponse(task));
 });
 
-exports.deleteById = catchErrors(async (req, res) => {
-  const task = await tasksService.deleteById(req.params.taskId);
+exports.deleteByBoardIdAndTaskId = catchErrors(async (req, res) => {
+  const task = await tasksService.deleteByBoardIdAndTaskId(req.params);
   if (!task) {
     return res
       .status(StatusCodes.NOT_FOUND)

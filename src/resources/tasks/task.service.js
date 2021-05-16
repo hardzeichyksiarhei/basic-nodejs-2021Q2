@@ -1,13 +1,28 @@
 const Task = require('./task.model');
 
-const create = async (payload) => Task.create(payload);
+const create = async (payload, params) => {
+  const taskCreatable = {
+    ...payload,
+    boardId: params?.boardId,
+  };
+  return Task.create(taskCreatable);
+};
 
-const getAll = () => Task.getAll();
+const getAllByBoardId = ({ boardId }) => Task.getAllByBoardId(boardId);
 
-const getById = (id) => Task.getById(id);
+const getByBoardIdAndTaskId = ({ boardId, taskId }) =>
+  Task.getByBoardIdAndTaskId(boardId, taskId);
 
-const updateById = async (id, payload) => Task.updateById(id, payload);
+const updateByBoardIdAndTaskId = async ({ boardId, taskId }, payload) =>
+  Task.updateByBoardIdAndTaskId({ boardId, taskId }, payload);
 
-const deleteById = async (id) => Task.deleteById(id);
+const deleteByBoardIdAndTaskId = async ({ boardId, taskId }) =>
+  Task.deleteByBoardIdAndTaskId(boardId, taskId);
 
-module.exports = { create, getAll, getById, updateById, deleteById };
+module.exports = {
+  create,
+  getAllByBoardId,
+  getByBoardIdAndTaskId,
+  updateByBoardIdAndTaskId,
+  deleteByBoardIdAndTaskId,
+};
