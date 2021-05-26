@@ -5,7 +5,8 @@ const catchErrors = require('../../common/catchErrors');
 const tasksService = require('./task.service');
 
 exports.create = catchErrors(async (req, res) => {
-  const task = await tasksService.create(req.body, req.params);
+  const { boardId } = req.params;
+  const task = await tasksService.create(boardId, req.body);
   if (!task) {
     return res
       .status(StatusCodes.BAD_REQUEST)
@@ -15,12 +16,14 @@ exports.create = catchErrors(async (req, res) => {
 });
 
 exports.getAllByBoardId = catchErrors(async (req, res) => {
-  const tasks = await tasksService.getAllByBoardId(req.params);
+  const { boardId } = req.params;
+  const tasks = await tasksService.getAllByBoardId(boardId);
   return res.status(StatusCodes.OK).json(tasks.map(Task.toResponse));
 });
 
 exports.getByBoardIdAndTaskId = catchErrors(async (req, res) => {
-  const task = await tasksService.getByBoardIdAndTaskId(req.params);
+  const { boardId, taskId } = req.params;
+  const task = await tasksService.getByBoardIdAndTaskId(boardId, taskId);
   if (!task) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -30,8 +33,10 @@ exports.getByBoardIdAndTaskId = catchErrors(async (req, res) => {
 });
 
 exports.updateByBoardIdAndTaskId = catchErrors(async (req, res) => {
+  const { boardId, taskId } = req.params;
   const task = await tasksService.updateByBoardIdAndTaskId(
-    req.params,
+    boardId,
+    taskId,
     req.body
   );
   if (!task) {
@@ -43,7 +48,8 @@ exports.updateByBoardIdAndTaskId = catchErrors(async (req, res) => {
 });
 
 exports.deleteByBoardIdAndTaskId = catchErrors(async (req, res) => {
-  const task = await tasksService.deleteByBoardIdAndTaskId(req.params);
+  const { boardId, taskId } = req.params;
+  const task = await tasksService.deleteByBoardIdAndTaskId(boardId, taskId);
   if (!task) {
     return res
       .status(StatusCodes.NOT_FOUND)
