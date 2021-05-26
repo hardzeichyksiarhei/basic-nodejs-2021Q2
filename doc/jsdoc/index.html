@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Board.html">Board</a><ul class='methods'><li data-type='method'><a href="Board.html#.create">create</a></li><li data-type='method'><a href="Board.html#.deleteById">deleteById</a></li><li data-type='method'><a href="Board.html#.getAll">getAll</a></li><li data-type='method'><a href="Board.html#.getById">getById</a></li><li data-type='method'><a href="Board.html#.toResponse">toResponse</a></li><li data-type='method'><a href="Board.html#.updateById">updateById</a></li><li data-type='method'><a href="Board.html#update">update</a></li></ul></li><li><a href="Column.html">Column</a><ul class='methods'><li data-type='method'><a href="Column.html#.create">create</a></li><li data-type='method'><a href="Column.html#.createSync">createSync</a></li></ul></li><li><a href="Task.html">Task</a><ul class='methods'><li data-type='method'><a href="Task.html#.create">create</a></li><li data-type='method'><a href="Task.html#.deleteByBoardIdAndTaskId">deleteByBoardIdAndTaskId</a></li><li data-type='method'><a href="Task.html#.findAll">findAll</a></li><li data-type='method'><a href="Task.html#.getAllByBoardId">getAllByBoardId</a></li><li data-type='method'><a href="Task.html#.getByBoardIdAndTaskId">getByBoardIdAndTaskId</a></li><li data-type='method'><a href="Task.html#.getById">getById</a></li><li data-type='method'><a href="Task.html#.toResponse">toResponse</a></li><li data-type='method'><a href="Task.html#.updateByBoardIdAndTaskId">updateByBoardIdAndTaskId</a></li><li data-type='method'><a href="Task.html#.updateById">updateById</a></li><li data-type='method'><a href="Task.html#update">update</a></li></ul></li><li><a href="User.html">User</a><ul class='methods'><li data-type='method'><a href="User.html#.create">create</a></li><li data-type='method'><a href="User.html#.deleteById">deleteById</a></li><li data-type='method'><a href="User.html#.getAll">getAll</a></li><li data-type='method'><a href="User.html#.getById">getById</a></li><li data-type='method'><a href="User.html#.toResponse">toResponse</a></li><li data-type='method'><a href="User.html#.updateById">updateById</a></li><li data-type='method'><a href="User.html#update">update</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="Boards.html">Boards</a></li><li></li><li></li><li><a href="Columns.html">Columns</a></li><li><a href="Tasks.html">Tasks</a></li><li></li><li></li><li><a href="Users.html">Users</a></li><li></li><li></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#all">all</a></li><li><a href="global.html#catchErrors">catchErrors</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#deleteByBoardIdAndTaskId">deleteByBoardIdAndTaskId</a></li><li><a href="global.html#deleteById">deleteById</a></li><li><a href="global.html#getAll">getAll</a></li><li><a href="global.html#getAllByBoardId">getAllByBoardId</a></li><li><a href="global.html#getByBoardIdAndTaskId">getByBoardIdAndTaskId</a></li><li><a href="global.html#getById">getById</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#updateByBoardIdAndTaskId">updateByBoardIdAndTaskId</a></li><li><a href="global.html#updateById">updateById</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+    <section class="package">
+        <h3> </h3>		
+    </section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="readme usertext">
+        <article><h1>RS School REST service</h1>
+<h2>Prerequisites</h2>
+<ul>
+<li>Git - <a href="https://git-scm.com/downloads">Download &amp; Install Git</a>.</li>
+<li>Node.js - <a href="https://nodejs.org/en/download/">Download &amp; Install Node.js</a> and the npm package manager.</li>
+</ul>
+<h2>Downloading</h2>
+<pre class="prettyprint source"><code>git clone {repository URL}
+</code></pre>
+<h2>Installing NPM modules</h2>
+<pre class="prettyprint source"><code>npm install
+</code></pre>
+<h2>Running application</h2>
+<pre class="prettyprint source"><code>npm start
+</code></pre>
+<p>After starting the app on port (4000 as default) you can open
+in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
+For more information about OpenAPI/Swagger please visit https://swagger.io/.</p>
+<h2>Testing</h2>
+<p>After application running open new terminal and enter:</p>
+<p>To run all tests without authorization</p>
+<pre class="prettyprint source"><code>npm test
+</code></pre>
+<p>To run only one of all test suites (users, boards or tasks)</p>
+<pre class="prettyprint source"><code>npm test &lt;suite name>
+</code></pre>
+<p>To run all test with authorization</p>
+<pre class="prettyprint source"><code>npm run test:auth
+</code></pre>
+<p>To run only specific test suite with authorization (users, boards or tasks)</p>
+<pre class="prettyprint source"><code>npm run test:auth &lt;suite name>
+</code></pre>
+<h2>Development</h2>
+<p>If you're using VSCode, you can get a better developer experience from integration with <a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint">ESLint</a> and <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">Prettier</a> extensions.</p>
+<h3>Auto-fix and format</h3>
+<pre class="prettyprint source"><code>npm run lint
+</code></pre>
+<h3>Debugging in VSCode</h3>
+<p>Press <kbd>F5</kbd> to debug.</p>
+<p>For more information, visit: https://code.visualstudio.com/docs/editor/debugging</p></article>
+    </section>
+
+
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Fri May 28 2021 00:12:46 GMT+0300 (Moscow Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
