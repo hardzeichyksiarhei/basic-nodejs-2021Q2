@@ -6,16 +6,18 @@
  * @namespace Boards
  */
 
-const Board = require('./board.model');
-const Column = require('../columns/column.model');
-const Task = require('../tasks/task.model');
+import Board from './board.model';
+import Column from '../columns/column.model';
+import Task from '../tasks/task.model';
+
+import { TBoard } from './board.type';
 
 /**
  * Creates a board instance
  * @param {TBoard} payload The board object for create
  * @returns {Promise<TBoard>} The board object
  */
-const create = async (payload) => {
+const create = async (payload: TBoard): Promise<TBoard> => {
   const boardCreatable = {
     ...payload,
     columns: payload.columns?.map(Column.createSync),
@@ -27,25 +29,28 @@ const create = async (payload) => {
  * Gets all boards
  * @returns {Promise<TBoard[]>} The boards array
  */
-const getAll = () => Board.getAll();
+const getAll = (): Promise<TBoard[]> => Board.getAll();
 
 /**
  * Gets a single board by its id field
  * @param {string} id The id of the board
- * @returns {Promise<TBoard>} The board object
+ * @returns {Promise<?TBoard>} The board object or null
  */
-const getById = (id) => Board.getById(id);
+const getById = (id: string): Promise<TBoard | null> => Board.getById(id);
 
 /**
  * Updates a single board by its id field
  * @param {string} id The id of the board
  * @param {TBoard} payload The board object for update
- * @returns {Promise<TBoard>} The board object
+ * @returns {Promise<?TBoard>} The board object
  */
-const updateById = async (id, payload) => {
+const updateById = async (
+  id: string,
+  payload: TBoard
+): Promise<TBoard | null> => {
   const boardUpdatable = {
     ...payload,
-    columns: payload.columns?.map(Column.createSync),
+    columns: payload.columns.map(Column.createSync),
   };
   return Board.updateById(id, boardUpdatable);
 };
@@ -55,10 +60,10 @@ const updateById = async (id, payload) => {
  * @param {string} id The id of the board
  * @returns {Promise<?TBoard>} The board object or null
  */
-const deleteById = async (id) => {
+const deleteById = async (id: string): Promise<TBoard | null> => {
   const boardDeleted = await Board.deleteById(id);
 
-  if (boardDeleted && boardDeleted.id) {
+  if (boardDeleted) {
     const tasks = await Task.findAll(
       (task) => task.boardId === boardDeleted.id
     );
@@ -68,4 +73,4 @@ const deleteById = async (id) => {
   return boardDeleted;
 };
 
-module.exports = { create, getAll, getById, updateById, deleteById };
+export default { create, getAll, getById, updateById, deleteById };

@@ -1,6 +1,8 @@
-const router = require('express').Router();
+import { Router } from 'express';
 
-const boardsController = require('./board.controller');
+import boardsController from './board.controller';
+
+const router = Router();
 
 router.route('/').get(boardsController.getAll).post(boardsController.create);
 
@@ -10,4 +12,4 @@ router
   .put(boardsController.updateById)
   .delete(boardsController.deleteById);
 
-module.exports = router;
+export default router;

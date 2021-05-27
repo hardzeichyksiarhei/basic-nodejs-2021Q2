@@ -1,10 +1,13 @@
-const { StatusCodes } = require('http-status-codes');
-const User = require('./user.model');
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import asyncHandler from 'express-async-handler';
 
-const catchErrors = require('../../common/catchErrors');
-const usersService = require('./user.service');
+import User from './user.model';
 
-exports.create = catchErrors(async (req, res) => {
+import usersService from './user.service';
+import { TUser } from './user.type';
+
+const create = asyncHandler(async (req: Request, res: Response) => {
   const user = await usersService.create(req.body);
   if (!user) {
     return res
@@ -14,13 +17,14 @@ exports.create = catchErrors(async (req, res) => {
   return res.status(StatusCodes.CREATED).json(User.toResponse(user));
 });
 
-exports.getAll = catchErrors(async (req, res) => {
+const getAll = asyncHandler(async (_: Request, res: Response) => {
   const users = await usersService.getAll();
   return res.status(StatusCodes.OK).json(users.map(User.toResponse));
 });
 
-exports.getById = catchErrors(async (req, res) => {
-  const user = await usersService.getById(req.params.userId);
+const getById = asyncHandler(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = await usersService.getById(userId!);
   if (!user) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -29,8 +33,10 @@ exports.getById = catchErrors(async (req, res) => {
   return res.status(StatusCodes.OK).json(User.toResponse(user));
 });
 
-exports.updateById = catchErrors(async (req, res) => {
-  const user = await usersService.updateById(req.params.userId, req.body);
+const updateById = asyncHandler(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const payload: TUser = req.body;
+  const user = await usersService.updateById(userId!, payload);
   if (!user) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -39,8 +45,9 @@ exports.updateById = catchErrors(async (req, res) => {
   return res.status(StatusCodes.OK).json(user && User.toResponse(user));
 });
 
-exports.deleteById = catchErrors(async (req, res) => {
-  const user = await usersService.deleteById(req.params.userId);
+const deleteById = asyncHandler(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = await usersService.deleteById(userId!);
   if (!user) {
     return res
       .status(StatusCodes.NOT_FOUND)
@@ -48,3 +55,5 @@ exports.deleteById = catchErrors(async (req, res) => {
   }
   return res.status(StatusCodes.OK).json(User.toResponse(user));
 });
+
+export default { create, getAll, getById, updateById, deleteById };
