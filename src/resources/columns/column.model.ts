@@ -6,15 +6,33 @@
  * @namespace Columns
  */
 
-const { v4: uuid } = require('uuid');
+import { v4 as uuid } from 'uuid';
+
+import { TColumn, TColumnConstructor } from './column.type';
+
+interface IColumn {
+  id: string;
+  title: string;
+  order: number;
+}
 
 /** Class representing a Column model */
-class Column {
+class Column implements IColumn {
+  id: string;
+
+  title: string;
+
+  order: number;
+
   /**
    * Creates a column instance
    * @param {TColumn} column The column object
    */
-  constructor({ id = uuid(), title = 'COLUMN', order = -1 } = {}) {
+  constructor({
+    id = uuid(),
+    title = 'COLUMN',
+    order = -1,
+  }: TColumnConstructor = {}) {
     this.id = id;
     this.title = title;
     this.order = order;
@@ -27,7 +45,7 @@ class Column {
    * @param {TColumn} payload The column object for create
    * @returns {Promise<TColumn>} The column object
    */
-  static async create(payload) {
+  static async create(payload: TColumn): Promise<TColumn> {
     return new Column(payload);
   }
 
@@ -36,9 +54,9 @@ class Column {
    * @param {TColumn} payload The column object for create
    * @returns {TColumn} The column object
    */
-  static createSync(payload) {
+  static createSync(payload: TColumn): TColumn {
     return new Column(payload);
   }
 }
 
-module.exports = Column;
+export default Column;

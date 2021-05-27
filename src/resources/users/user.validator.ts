@@ -1,8 +1,8 @@
-const { body, param } = require('express-validator');
+import { body, param } from 'express-validator';
 
 const MIN_PASSWORD = 6;
 
-module.exports = {
+export default {
   create: () => [
     body('password')
       .isLength({ min: MIN_PASSWORD })

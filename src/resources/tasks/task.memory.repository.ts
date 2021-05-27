@@ -6,14 +6,18 @@
  * @namespace Tasks
  */
 
-const tasks = require('../../data/tasks');
+import db from '../../db';
+
+import { TTask } from './task.type';
+
+const { tasks } = db;
 
 /**
  * Adds an task object to the end of the tasks collection
  * @param {TTask} task The task to add in repository
  * @returns {Promise<TTask>} The task who was added to the repository
  */
-const add = async (task) => {
+const add = async (task: TTask): Promise<TTask> => {
   tasks.push(task);
   return task;
 };
@@ -22,19 +26,19 @@ const add = async (task) => {
  * Gets all tasks
  * @returns {Promise<TTask[]>} The tasks array
  */
-const all = async () => tasks;
+const all = async (): Promise<TTask[]> => tasks;
 
 /**
  * Removes a single task by its id field
  * @param {TTask} task The task object
- * @returns {?TTask} The task object or null
+ * @returns {Promise<?TTask>} The task object or null
  */
-const remove = async ({ id }) => {
+const remove = async ({ id }: TTask): Promise<TTask | null> => {
   const idx = tasks.findIndex((task) => task.id === id);
   if (idx === -1) return null;
-  const taskDeletable = tasks[idx];
+  const taskDeletable = tasks[idx]!;
   tasks.splice(idx, 1);
   return taskDeletable;
 };
 
-module.exports = { add, all, remove };
+export default { add, all, remove };

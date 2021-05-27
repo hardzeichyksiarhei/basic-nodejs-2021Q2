@@ -5,14 +5,32 @@
  *
  * @namespace Users
  */
+import bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
 
-const bcrypt = require('bcrypt');
-const { v4: uuid } = require('uuid');
+import usersRepo from './user.memory.repository';
 
-const usersRepo = require('./user.memory.repository');
+import { TUser, TUserConstructor, TUserUpdate } from './user.type';
+
+interface IUser {
+  id: string;
+  name: string;
+  login: string;
+  password: string;
+
+  update(payload: TUserUpdate): Promise<TUser>;
+}
 
 /** Class representing a User model */
-class User {
+class User implements IUser {
+  id: string;
+
+  name: string;
+
+  login: string;
+
+  password: string;
+
   /**
    * Creates a user instance
    * @param {TUser} user The user object
@@ -22,7 +40,7 @@ class User {
     name = 'USER',
     login = 'user',
     password = 'P@55w0rd',
-  } = {}) {
+  }: TUserConstructor = {}) {
     this.id = id;
     this.name = name;
     this.login = login;
@@ -34,7 +52,7 @@ class User {
    * @param {TUser} payload The user object for create
    * @returns {Promise<TUser>} The user object
    */
-  static async create(payload) {
+  static async create(payload: TUser): Promise<TUser> {
     const user = new User(payload);
     const userAdded = await usersRepo.add(user);
     return userAdded;
@@ -44,7 +62,7 @@ class User {
    * Gets all users
    * @returns {Promise<TUser[]>} The users array
    */
-  static async getAll() {
+  static async getAll(): Promise<TUser[]> {
     const users = await usersRepo.all();
     return users;
   }
@@ -52,33 +70,36 @@ class User {
   /**
    * Gets a single user by its id field
    * @param {string} id The id of the user
-   * @returns {Promise<TUser>} The user object
+   * @returns {Promise<?TUser>} The user object or null
    */
-  static async getById(id) {
+  static async getById(id: string): Promise<TUser | null> {
     const users = await usersRepo.all();
     const idx = users.findIndex((user) => user.id === id);
     if (idx === -1) return null;
-    return users[idx];
+    return users[idx]!;
   }
 
   /**
    * Updates a single user by its id field
    * @param {string} id The id of the user
-   * @param {TUser} payload The user object for update
-   * @returns {Promise<TUser>} The user object
+   * @param {TUserUpdate} payload The user object for update
+   * @returns {Promise<?TUser>} The user object or null
    */
-  static async updateById(id, payload) {
+  static async updateById(
+    id: string,
+    payload: TUserUpdate
+  ): Promise<TUser | null> {
     const user = await User.getById(id);
     if (!user) return null;
-    return user.update(payload);
+    return (user as IUser).update(payload);
   }
 
   /**
    * Updates a user
-   * @param {TUser} payload The user object for update
+   * @param {TUserUpdate} payload The user object for update
    * @returns {Promise<TUser>} The user object
    */
-  async update(payload) {
+  async update(payload: TUserUpdate): Promise<TUser> {
     const { name, login, password } = payload;
     if (name !== undefined) this.name = name;
     if (login !== undefined) this.login = login;
@@ -92,7 +113,7 @@ class User {
    * @param {string} id The id of the user
    * @returns {Promise<?TUser>} The user object or null
    */
-  static async deleteById(id) {
+  static async deleteById(id: string): Promise<TUser | null> {
     const user = await User.getById(id);
     if (!user) return null;
     return usersRepo.remove(user);
@@ -101,12 +122,12 @@ class User {
   /**
    * Gets a single user for API response
    * @param {TUser} user The user object
-   * @returns {TUserResponse} The user object for response
+   * @returns {TUser} The user object for response
    */
-  static toResponse(user) {
+  static toResponse(user: TUser): Omit<TUser, 'password'> {
     const { id, name, login } = user;
     return { id, name, login };
   }
 }
 
-module.exports = User;
+export default User;

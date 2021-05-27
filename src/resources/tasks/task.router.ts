@@ -1,6 +1,8 @@
-const router = require('express').Router();
+import { Router } from 'express';
 
-const tasksController = require('./task.controller');
+import tasksController from './task.controller';
+
+const router = Router();
 
 router
   .route('/:boardId/tasks')
@@ -13,4 +15,4 @@ router
   .put(tasksController.updateByBoardIdAndTaskId)
   .delete(tasksController.deleteByBoardIdAndTaskId);
 
-module.exports = router;
+export default router;

@@ -6,17 +6,38 @@
  * @namespace Boards
  */
 
-const { v4: uuid } = require('uuid');
+import { v4 as uuid } from 'uuid';
 
-const boardsRepo = require('./board.memory.repository');
+import boardsRepo from './board.memory.repository';
+
+import { TColumn } from '../columns/column.type';
+import { TBoard, TBoardConstructor, TBoardUpdate } from "./board.type";
+
+interface IBoard {
+  id: string;
+  title: string;
+  columns: TColumn[];
+
+  update(payload: TBoardUpdate): Promise<TBoard>;
+}
 
 /** Class representing a Board model */
-class Board {
+class Board implements IBoard {
+  id: string;
+
+  title: string;
+
+  columns: TColumn[];
+
   /**
    * Creates a board instance
    * @param {TBoard} board The board object
    */
-  constructor({ id = uuid(), title = 'BOARD', columns = [] } = {}) {
+  constructor({
+    id = uuid(),
+    title = 'BOARD',
+    columns = [],
+  }: TBoardConstructor = {}) {
     this.id = id;
     this.title = title;
     this.columns = columns;
@@ -27,7 +48,7 @@ class Board {
    * @param {TBoard} payload The board object for create
    * @returns {Promise<TBoard>} The board object
    */
-  static async create(payload) {
+  static async create(payload: TBoard): Promise<TBoard> {
     const board = new Board(payload);
     const boardAdded = await boardsRepo.add(board);
     return boardAdded;
@@ -37,7 +58,7 @@ class Board {
    * Gets all boards
    * @returns {Promise<TBoard[]>} The boards array
    */
-  static async getAll() {
+  static async getAll(): Promise<TBoard[]> {
     const boards = await boardsRepo.all();
     return boards;
   }
@@ -45,25 +66,28 @@ class Board {
   /**
    * Gets a single board by its id field
    * @param {string} id The id of the board
-   * @returns {Promise<TBoard>} The board object
+   * @returns {Promise<?TBoard>} The board object or null
    */
-  static async getById(id) {
+  static async getById(id: string): Promise<TBoard | null> {
     const boards = await boardsRepo.all();
     const idx = boards.findIndex((board) => board.id === id);
     if (idx === -1) return null;
-    return boards[idx];
+    return boards[idx]!;
   }
 
   /**
    * Updates a single board by its id field
    * @param {string} id The id of the board
-   * @param {TBoard} payload The board object for update
-   * @returns {Promise<TBoard>} The board object
+   * @param {TBoardUpdate} payload The board object for update
+   * @returns {Promise<?TBoard>} The board object or null
    */
-  static async updateById(id, payload) {
+  static async updateById(
+    id: string,
+    payload: TBoardUpdate
+  ): Promise<TBoard | null> {
     const board = await Board.getById(id);
     if (!board) return null;
-    return board.update(payload);
+    return (board as IBoard).update(payload);
   }
 
   /**
@@ -71,7 +95,7 @@ class Board {
    * @param {TBoard} payload The board object for update
    * @returns {Promise<TBoard>} The board object
    */
-  async update(payload) {
+  async update(payload: TBoard): Promise<TBoard> {
     const { title, columns } = payload;
     if (title !== undefined) this.title = title;
     if (columns !== undefined) this.columns = columns;
@@ -84,7 +108,7 @@ class Board {
    * @param {string} id The id of the board
    * @returns {Promise<?TBoard>} The board object or null
    */
-  static async deleteById(id) {
+  static async deleteById(id: string): Promise<TBoard | null> {
     const board = await Board.getById(id);
     if (!board) return null;
     return boardsRepo.remove(board);
@@ -95,10 +119,10 @@ class Board {
    * @param {TBoard} user The board object
    * @returns {TBoard} The board object for response
    */
-  static toResponse(board) {
+  static toResponse(board: TBoard): TBoard {
     const { id, title, columns } = board;
     return { id, title, columns };
   }
 }
 
-module.exports = Board;
+export default Board;
