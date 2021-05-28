@@ -1,7 +1,10 @@
-export type TColumn = {
-  id: string;
+export interface IBaseColumn {
   title: string;
   order: number;
-};
+}
 
-export type TColumnConstructor = { [P in keyof TColumn]+?: TColumn[P] };
+export interface IBaseColumnPartial extends Partial<IBaseColumn> {}
+
+export interface IColumn extends IBaseColumn {
+  id: string;
+}

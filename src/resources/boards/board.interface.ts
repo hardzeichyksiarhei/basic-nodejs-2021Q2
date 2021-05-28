@@ -1,8 +1,8 @@
-import { TColumn } from '../columns/column.type';
+import { IColumn } from '../columns/column.type';
 
 export interface IBaseBoard {
   title: string;
-  columns: TColumn[];
+  columns: IColumn[];
 }
 
 export interface IBaseBoardPartial extends Partial<IBaseBoard> {}

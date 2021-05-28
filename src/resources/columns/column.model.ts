@@ -8,31 +8,19 @@
 
 import { v4 as uuid } from 'uuid';
 
-import { TColumn, TColumnConstructor } from './column.type';
-
-interface IColumn {
-  id: string;
-  title: string;
-  order: number;
-}
+import { IColumn, IBaseColumn } from './column.type';
 
 /** Class representing a Column model */
 class Column implements IColumn {
   id: string;
-
   title: string;
-
   order: number;
 
   /**
    * Creates a column instance
-   * @param {TColumn} column The column object
+   * @param {Partial<IColumn>} column The column object
    */
-  constructor({
-    id = uuid(),
-    title = 'COLUMN',
-    order = -1,
-  }: TColumnConstructor = {}) {
+  constructor({ id = uuid(), title = 'COLUMN', order = -1 }: Partial<IColumn> = {}) {
     this.id = id;
     this.title = title;
     this.order = order;
@@ -42,19 +30,19 @@ class Column implements IColumn {
    * Creates a column instance
    * @async
    *
-   * @param {TColumn} payload The column object for create
-   * @returns {Promise<TColumn>} The column object
+   * @param {IBaseColumn} payload The column object for create
+   * @returns {Promise<IColumn>} The column object
    */
-  static async create(payload: TColumn): Promise<TColumn> {
+  static async create(payload: IBaseColumn): Promise<IColumn> {
     return new Column(payload);
   }
 
   /**
    * Creates a column instance
-   * @param {TColumn} payload The column object for create
-   * @returns {TColumn} The column object
+   * @param {IBaseColumn} payload The column object for create
+   * @returns {IColumn} The column object
    */
-  static createSync(payload: TColumn): TColumn {
+  static createSync(payload: IBaseColumn): IColumn {
     return new Column(payload);
   }
 }
