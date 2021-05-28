@@ -1,8 +1,8 @@
-import { TUser } from './resources/users/user.type';
+import { IUser } from './resources/users/user.interface';
 import { TBoard } from './resources/boards/board.type';
 import { TTask } from './resources/tasks/task.type';
 
-const users: TUser[] = [];
+const users: IUser[] = [];
 const boards: TBoard[] = [];
 const tasks: TTask[] = [];
 

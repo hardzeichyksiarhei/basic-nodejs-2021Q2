@@ -6,7 +6,7 @@ import AppError from '../../classes/appError.class';
 import User from './user.model';
 
 import usersService from './user.service';
-import { TUser } from './user.type';
+import { IBaseUser } from './user.interface';
 
 const create = asyncHandler(async (req: Request, res: Response) => {
   const user = await usersService.create(req.body);
@@ -32,7 +32,7 @@ const getById = asyncHandler(async (req: Request, res: Response) => {
 
 const updateById = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const payload: TUser = req.body;
+  const payload: IBaseUser = req.body;
   const user = await usersService.updateById(userId!, payload);
   if (!user) {
     throw new AppError('User not found', StatusCodes.NOT_FOUND, 'USER_NOT_FOUND');

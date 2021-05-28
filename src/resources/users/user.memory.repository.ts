@@ -8,32 +8,32 @@
 
 import db from '../../db';
 
-import { TUser } from './user.type';
+import { IUser } from './user.interface';
 
 const { users } = db;
 
 /**
  * Adds an user object to the end of the users collection
- * @param {TUser} user The user to add in repository
- * @returns {Promise<TUser>} The user who was added to the repository
+ * @param {IUser} user The user to add in repository
+ * @returns {Promise<IUser>} The user who was added to the repository
  */
-const add = async (user: TUser): Promise<TUser> => {
+const add = async (user: IUser): Promise<IUser> => {
   users.push(user);
   return user;
 };
 
 /**
  * Gets all users
- * @returns {Promise<TUser[]>} The users array
+ * @returns {Promise<IUser[]>} The users array
  */
-const all = async (): Promise<TUser[]> => users;
+const all = async (): Promise<IUser[]> => users;
 
 /**
  * Removes a single user by its id field
  * @param {TUser} user The user object
  * @returns {?TUser} The user object or null
  */
-const remove = async ({ id }: TUser): Promise<TUser | null> => {
+const remove = async ({ id }: IUser): Promise<IUser | null> => {
   const idx = users.findIndex((user) => user.id === id);
   if (idx === -1) return null;
   const userDeletable = users[idx]!;
