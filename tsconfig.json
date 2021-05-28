@@ -20,7 +20,7 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "noUncheckedIndexedAccess": true,
-        "noPropertyAccessFromIndexSignature": false,
+        "noPropertyAccessFromIndexSignature": true,
         /* Module Resolution Options */
         "moduleResolution": "node",
         "esModuleInterop": true,
