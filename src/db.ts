@@ -1,9 +1,9 @@
 import { IUser } from './resources/users/user.interface';
-import { TBoard } from './resources/boards/board.type';
+import { IBoard } from './resources/boards/board.interface';
 import { TTask } from './resources/tasks/task.type';
 
 const users: IUser[] = [];
-const boards: TBoard[] = [];
+const boards: IBoard[] = [];
 const tasks: TTask[] = [];
 
 export default { users, boards, tasks };

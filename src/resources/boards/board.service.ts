@@ -10,14 +10,14 @@ import Board from './board.model';
 import Column from '../columns/column.model';
 import Task from '../tasks/task.model';
 
-import { TBoard } from './board.type';
+import { IBoard, IBaseBoard, IBaseBoardPartial } from './board.interface';
 
 /**
  * Creates a board instance
- * @param {TBoard} payload The board object for create
- * @returns {Promise<TBoard>} The board object
+ * @param {IBaseBoard} payload The board object for create
+ * @returns {Promise<IBoard>} The board object
  */
-const create = async (payload: TBoard): Promise<TBoard> => {
+const create = async (payload: IBaseBoard): Promise<IBoard> => {
   const boardCreatable = {
     ...payload,
     columns: payload.columns?.map(Column.createSync),
@@ -27,30 +27,27 @@ const create = async (payload: TBoard): Promise<TBoard> => {
 
 /**
  * Gets all boards
- * @returns {Promise<TBoard[]>} The boards array
+ * @returns {Promise<IBoard[]>} The boards array
  */
-const getAll = (): Promise<TBoard[]> => Board.getAll();
+const getAll = (): Promise<IBoard[]> => Board.getAll();
 
 /**
  * Gets a single board by its id field
  * @param {string} id The id of the board
- * @returns {Promise<?TBoard>} The board object or null
+ * @returns {Promise<?IBoard>} The board object or null
  */
-const getById = (id: string): Promise<TBoard | null> => Board.getById(id);
+const getById = (id: string): Promise<IBoard | null> => Board.getById(id);
 
 /**
  * Updates a single board by its id field
  * @param {string} id The id of the board
- * @param {TBoard} payload The board object for update
- * @returns {Promise<?TBoard>} The board object
+ * @param {IBaseBoardPartial} payload The board object for update
+ * @returns {Promise<?IBoard>} The board object
  */
-const updateById = async (
-  id: string,
-  payload: TBoard
-): Promise<TBoard | null> => {
+const updateById = async (id: string, payload: IBaseBoardPartial): Promise<IBoard | null> => {
   const boardUpdatable = {
     ...payload,
-    columns: payload.columns.map(Column.createSync),
+    columns: payload.columns?.map(Column.createSync),
   };
   return Board.updateById(id, boardUpdatable);
 };
@@ -58,15 +55,13 @@ const updateById = async (
 /**
  * Deletes a single board by its id field
  * @param {string} id The id of the board
- * @returns {Promise<?TBoard>} The board object or null
+ * @returns {Promise<?IBoard>} The board object or null
  */
-const deleteById = async (id: string): Promise<TBoard | null> => {
+const deleteById = async (id: string): Promise<IBoard | null> => {
   const boardDeleted = await Board.deleteById(id);
 
   if (boardDeleted) {
-    const tasks = await Task.findAll(
-      (task) => task.boardId === boardDeleted.id
-    );
+    const tasks = await Task.findAll((task) => task.boardId === boardDeleted.id);
     tasks.forEach((task) => Task.updateById(task.id, { boardId: null }));
   }
 
