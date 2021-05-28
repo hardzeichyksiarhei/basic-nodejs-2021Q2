@@ -6,10 +6,10 @@ import AppError from '../../classes/appError.class';
 import Board from './board.model';
 import boardsService from './board.service';
 
-import { TBoard } from './board.type';
+import { IBaseBoard } from './board.interface';
 
 const create = asyncHandler(async (req: Request, res: Response) => {
-  const payload: TBoard = req.body;
+  const payload: IBaseBoard = req.body;
   const board = await boardsService.create(payload);
   if (!board) {
     throw new AppError('Board not create', StatusCodes.BAD_REQUEST, 'BOARD_NOT_CREATE');

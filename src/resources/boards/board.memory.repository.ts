@@ -8,16 +8,16 @@
 
 import db from '../../db';
 
-import { TBoard } from './board.type';
+import { IBoard } from './board.interface';
 
 const { boards } = db;
 
 /**
  * Adds an board object to the end of the boards collection
- * @param {TBoard} task The board to add in repository
- * @returns {Promise<TBoard>} The board who was added to the repository
+ * @param {IBoard} task The board to add in repository
+ * @returns {Promise<IBoard>} The board who was added to the repository
  */
-const add = async (board: TBoard): Promise<TBoard> => {
+const add = async (board: IBoard): Promise<IBoard> => {
   boards.push(board);
   return board;
 };
@@ -26,14 +26,14 @@ const add = async (board: TBoard): Promise<TBoard> => {
  * Gets all boards
  * @returns {Promise<TBoard[]>} The boards array
  */
-const all = async (): Promise<TBoard[]> => boards;
+const all = async (): Promise<IBoard[]> => boards;
 
 /**
  * Removes a single board by its id field
  * @param {TBoard} board The board object
  * @returns {Promise<?TBoard>} The board object or null
  */
-const remove = async ({ id }: TBoard): Promise<TBoard | null> => {
+const remove = async ({ id }: IBoard): Promise<IBoard | null> => {
   const idx = boards.findIndex((board) => board.id === id);
   if (idx === -1) return null;
   const boardDeletable = boards[idx]!;
