@@ -8,6 +8,8 @@ import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
 
+import AppError from './classes/appError.class';
+
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
@@ -26,5 +28,15 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 app.use('/boards', taskRouter);
+
+app.use((err: AppError, _: Request, res: Response) => {
+  const statusCode = err.statusCode || 500;
+  const status = err.status || 'ERROR';
+  const code = err.code || 'SERVER_ERROR';
+
+  const message = err.message || '';
+
+  res.status(statusCode).json({ status, code, message });
+});
 
 export default app;
