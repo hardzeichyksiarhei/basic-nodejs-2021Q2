@@ -7,45 +7,45 @@
  */
 
 import User from './user.model';
-import { TUser } from './user.type';
+import { IUser, IBaseUser, IBaseUserPartial } from './user.interface';
 
 import Task from '../tasks/task.model';
 
 /**
  * Creates a user instance
- * @param {TUser} payload The task object for create
- * @returns {Promise<TUser>} The task object
+ * @param {IBaseUser} payload The task object for create
+ * @returns {Promise<IUser>} The task object
  */
-const create = async (payload: TUser): Promise<TUser> => User.create(payload);
+const create = async (payload: IBaseUser): Promise<IUser> => User.create(payload);
 
 /**
  * Gets all users
- * @returns {Promise<TUser[]>} The users array
+ * @returns {Promise<IUser[]>} The users array
  */
-const getAll = async (): Promise<TUser[]> => User.getAll();
+const getAll = async (): Promise<IUser[]> => User.getAll();
 
 /**
  * Gets a single user by its id field
  * @param {string} id The id of the user
- * @returns {Promise<TUser | null>} The user object
+ * @returns {Promise<IUser | null>} The user object
  */
-const getById = async (id: string): Promise<TUser | null> => User.getById(id);
+const getById = async (id: string): Promise<IUser | null> => User.getById(id);
 
 /**
  * Updates a single user by its id field
  * @param {string} id The id of the user
- * @param {TUser} payload The user object for update
- * @returns {Promise<TUser | null>} The user object
+ * @param {IBaseUserPartial} payload The user object for update
+ * @returns {Promise<IUser | null>} The user object
  */
-const updateById = async (id: string, payload: TUser): Promise<TUser | null> =>
+const updateById = async (id: string, payload: IBaseUserPartial): Promise<IUser | null> =>
   User.updateById(id, payload);
 
 /**
  * Deletes a single user by its id field
  * @param {string} id The id of the user
- * @returns {Promise<?TUser>} The user object or null
+ * @returns {Promise<?IUser>} The user object or null
  */
-const deleteById = async (id: string): Promise<TUser | null> => {
+const deleteById = async (id: string): Promise<IUser | null> => {
   const userDeleted = await User.deleteById(id);
 
   if (userDeleted) {
