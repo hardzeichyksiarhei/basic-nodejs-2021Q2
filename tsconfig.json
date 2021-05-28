@@ -20,7 +20,7 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "noUncheckedIndexedAccess": true,
-        "noPropertyAccessFromIndexSignature": true,
+        "noPropertyAccessFromIndexSignature": false,
         /* Module Resolution Options */
         "moduleResolution": "node",
         "esModuleInterop": true,
@@ -31,5 +31,5 @@
         "forceConsistentCasingInFileNames": true
     },
     "exclude": ["node_modules"],
-    "include": ["src/**/*.ts"]
+    "include": ["./src/**/*.ts"]
 }
