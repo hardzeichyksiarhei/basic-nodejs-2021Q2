@@ -15,8 +15,11 @@ import { IUser, IBaseUser, IBaseUserPartial, IBaseUserResponse } from './user.in
 /** Class representing a User model */
 class User implements IUser {
   id: string;
+
   name: string;
+
   login: string;
+
   password: string;
 
   /**

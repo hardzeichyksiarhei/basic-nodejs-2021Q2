@@ -16,7 +16,9 @@ import { IBoard, IBaseBoardPartial, IBaseBoard, IBaseBoardResponse } from './boa
 /** Class representing a Board model */
 class Board implements IBoard {
   id: string;
+
   title: string;
+
   columns: IColumn[];
 
   /**

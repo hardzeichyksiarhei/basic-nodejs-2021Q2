@@ -13,7 +13,9 @@ import { IColumn, IBaseColumn } from './column.type';
 /** Class representing a Column model */
 class Column implements IColumn {
   id: string;
+
   title: string;
+
   order: number;
 
   /**
