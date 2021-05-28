@@ -1,5 +1,4 @@
-export type TTask = {
-  id: string;
+export type IBaseTask = {
   title: string;
   order: number;
   description: string;
@@ -8,5 +7,13 @@ export type TTask = {
   columnId: string | null;
 };
 
-export type TTaskConstructor = { [P in keyof TTask]+?: TTask[P] };
-export type TTaskUpdate = { [P in keyof Omit<TTask, 'id'>]+?: TTask[P] };
+export interface IBaseTaskPartial extends Partial<IBaseTask> {}
+export interface IBaseTaskResponse extends IBaseTask {
+  id: string;
+}
+
+export interface ITask extends IBaseTask {
+  id: string;
+
+  update(payload: IBaseTaskPartial): Promise<ITask>;
+}

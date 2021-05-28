@@ -4,7 +4,7 @@ import asyncHandler from 'express-async-handler';
 
 import AppError from '../../classes/appError.class';
 import Task from './task.model';
-import { TTask } from './task.type';
+import { IBaseTask } from './task.type';
 
 import tasksService from './task.service';
 
@@ -34,7 +34,7 @@ const getByBoardIdAndTaskId = asyncHandler(async (req: Request, res: Response) =
 
 const updateByBoardIdAndTaskId = asyncHandler(async (req: Request, res: Response) => {
   const { boardId, taskId } = req.params;
-  const payload: TTask = req.body;
+  const payload: IBaseTask = req.body;
   const task = await tasksService.updateByBoardIdAndTaskId(boardId ?? '', taskId ?? '', payload);
   if (!task) {
     throw new AppError('Task not found', StatusCodes.NOT_FOUND, 'TASK_NOT_FOUND');

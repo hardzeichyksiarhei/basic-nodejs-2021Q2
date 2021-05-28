@@ -8,15 +8,15 @@
 
 import Task from './task.model';
 
-import { TTask } from './task.type';
+import { ITask, IBaseTask, IBaseTaskPartial } from './task.type';
 
 /**
  * Creates a task instance
  * @param {string} boardId The id of the board
- * @param {TTask} payload The task object for create
- * @returns {Promise<TTask>} The task object
+ * @param {IBaseTask} payload The task object for create
+ * @returns {Promise<ITask>} The task object
  */
-const create = async (boardId: string, payload: TTask): Promise<TTask> => {
+const create = async (boardId: string, payload: IBaseTask): Promise<ITask> => {
   const taskCreatable = { ...payload, boardId };
   return Task.create(taskCreatable);
 };
@@ -24,46 +24,40 @@ const create = async (boardId: string, payload: TTask): Promise<TTask> => {
 /**
  * Gets all tasks by its boardId and taskId fields
  * @param {string} boardId The id of the board
- * @returns {Promise<TTask[]>} The tasks array
+ * @returns {Promise<ITask[]>} The tasks array
  */
-const getAllByBoardId = async (boardId: string): Promise<TTask[]> =>
-  Task.getAllByBoardId(boardId);
+const getAllByBoardId = async (boardId: string): Promise<ITask[]> => Task.getAllByBoardId(boardId);
 
 /**
  * Gets a single task by its boardId and taskId fields
  * @param {string} boardId The id of the board
  * @param {string} taskId The id of the task
- * @returns {Promise<?TTask>} The task object
+ * @returns {Promise<?ITask>} The task object
  */
-const getByBoardIdAndTaskId = async (
-  boardId: string,
-  taskId: string
-): Promise<TTask | null> => Task.getByBoardIdAndTaskId(boardId, taskId);
+const getByBoardIdAndTaskId = async (boardId: string, taskId: string): Promise<ITask | null> =>
+  Task.getByBoardIdAndTaskId(boardId, taskId);
 
 /**
  * Updates a single task by boardId and taskId fields
  * @param {string} boardId The id of the board
  * @param {string} taskId The id of the task
- * @param {TTask} payload The task object for update
- * @returns {Promise<?TTask>} The task object
+ * @param {IBaseTaskPartial} payload The task object for update
+ * @returns {Promise<?ITask>} The task object
  */
 const updateByBoardIdAndTaskId = async (
   boardId: string,
   taskId: string,
-  payload: TTask
-): Promise<TTask | null> =>
-  Task.updateByBoardIdAndTaskId(boardId, taskId, payload);
+  payload: IBaseTaskPartial
+): Promise<ITask | null> => Task.updateByBoardIdAndTaskId(boardId, taskId, payload);
 
 /**
  * Deletes a single task by boardId and taskId fields
  * @param {string} boardId The id of the board
  * @param {string} taskId The id of the task
- * @returns {Promise<?TTask>} The task object or null
+ * @returns {Promise<?ITask>} The task object or null
  */
-const deleteByBoardIdAndTaskId = async (
-  boardId: string,
-  taskId: string
-): Promise<TTask | null> => Task.deleteByBoardIdAndTaskId(boardId, taskId);
+const deleteByBoardIdAndTaskId = async (boardId: string, taskId: string): Promise<ITask | null> =>
+  Task.deleteByBoardIdAndTaskId(boardId, taskId);
 
 export default {
   create,

@@ -8,32 +8,32 @@
 
 import db from '../../db';
 
-import { TTask } from './task.type';
+import { ITask } from './task.type';
 
 const { tasks } = db;
 
 /**
  * Adds an task object to the end of the tasks collection
- * @param {TTask} task The task to add in repository
- * @returns {Promise<TTask>} The task who was added to the repository
+ * @param {ITask} task The task to add in repository
+ * @returns {Promise<ITask>} The task who was added to the repository
  */
-const add = async (task: TTask): Promise<TTask> => {
+const add = async (task: ITask): Promise<ITask> => {
   tasks.push(task);
   return task;
 };
 
 /**
  * Gets all tasks
- * @returns {Promise<TTask[]>} The tasks array
+ * @returns {Promise<ITask[]>} The tasks array
  */
-const all = async (): Promise<TTask[]> => tasks;
+const all = async (): Promise<ITask[]> => tasks;
 
 /**
  * Removes a single task by its id field
- * @param {TTask} task The task object
- * @returns {Promise<?TTask>} The task object or null
+ * @param {ITask} task The task object
+ * @returns {Promise<?ITask>} The task object or null
  */
-const remove = async ({ id }: TTask): Promise<TTask | null> => {
+const remove = async ({ id }: ITask): Promise<ITask | null> => {
   const idx = tasks.findIndex((task) => task.id === id);
   if (idx === -1) return null;
   const taskDeletable = tasks[idx]!;
