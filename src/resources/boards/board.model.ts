@@ -10,14 +10,14 @@ import { v4 as uuid } from 'uuid';
 
 import boardsRepo from './board.memory.repository';
 
-import { TColumn } from '../columns/column.type';
+import { IColumn } from '../columns/column.type';
 import { IBoard, IBaseBoardPartial, IBaseBoard, IBaseBoardResponse } from './board.interface';
 
 /** Class representing a Board model */
 class Board implements IBoard {
   id: string;
   title: string;
-  columns: TColumn[];
+  columns: IColumn[];
 
   /**
    * Creates a board instance
