@@ -21,9 +21,9 @@ class User implements IUser {
 
   /**
    * Creates a user instance
-   * @param {IUser} user The user object
+   * @param {IBaseUserPartial} user The user object
    */
-  constructor({ name = 'USER', login = 'user', password = 'P@55w0rd' }: Partial<IBaseUser> = {}) {
+  constructor({ name = 'USER', login = 'user', password = 'P@55w0rd' }: IBaseUserPartial = {}) {
     this.id = uuid();
     this.name = name;
     this.login = login;
