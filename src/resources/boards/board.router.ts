@@ -1,15 +1,18 @@
 import { Router } from 'express';
 
-import boardsController from './board.controller';
+import BoardController from './board.controller';
+import TaskValidator from './board.validator';
+
+import { validate } from '../../middlewares';
 
 const router = Router();
 
-router.route('/').get(boardsController.getAll).post(boardsController.create);
+router.route('/').get(BoardController.getAll).post(BoardController.create);
 
 router
   .route('/:boardId')
-  .get(boardsController.getById)
-  .put(boardsController.updateById)
-  .delete(boardsController.deleteById);
+  .get(TaskValidator.getById(), validate, BoardController.getById)
+  .put(TaskValidator.updateById(), validate, BoardController.updateById)
+  .delete(TaskValidator.deleteById(), validate, BoardController.deleteById);
 
 export default router;
