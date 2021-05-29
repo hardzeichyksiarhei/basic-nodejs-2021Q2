@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
-import { StatusCodes } from 'http-status-codes';
 import { validationResult } from 'express-validator';
 
-export default (req: Request, res: Response, next: NextFunction) => {
+import ValidateError from '../classes/validationError.class';
+
+export default (req: Request, _res: Response, next: NextFunction) => {
   const errors = validationResult(req);
 
   if (errors.isEmpty()) return next();
 
-  return res
-    .status(StatusCodes.BAD_REQUEST)
-    .json({ code: 'VALIDATION_ERROR', errors: errors.array() });
+  const error = errors.array().pop();
+
+  return next(new ValidateError(error?.msg));
 };
