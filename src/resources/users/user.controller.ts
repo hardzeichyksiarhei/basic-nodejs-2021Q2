@@ -6,7 +6,6 @@ import AppError from '../../classes/appError.class';
 import User from './user.model';
 
 import usersService from './user.service';
-import { IBaseUser } from './user.interface';
 
 const create = asyncHandler(async (req: Request, res: Response) => {
   const user = await usersService.create(req.body);
@@ -23,7 +22,7 @@ const getAll = asyncHandler(async (_: Request, res: Response) => {
 
 const getById = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const user = await usersService.getById(userId ?? '');
+  const user = await usersService.getById(userId || '');
   if (!user) {
     throw new AppError('User not found', StatusCodes.NOT_FOUND, 'USER_NOT_FOUND');
   }
@@ -32,8 +31,7 @@ const getById = asyncHandler(async (req: Request, res: Response) => {
 
 const updateById = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const payload: IBaseUser = req.body;
-  const user = await usersService.updateById(userId!, payload);
+  const user = await usersService.updateById(userId || '', req.body);
   if (!user) {
     throw new AppError('User not found', StatusCodes.NOT_FOUND, 'USER_NOT_FOUND');
   }
@@ -42,7 +40,7 @@ const updateById = asyncHandler(async (req: Request, res: Response) => {
 
 const deleteById = asyncHandler(async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const user = await usersService.deleteById(userId!);
+  const user = await usersService.deleteById(userId || '');
   if (!user) {
     throw new AppError('User not found', StatusCodes.NOT_FOUND, 'USER_NOT_FOUND');
   }
