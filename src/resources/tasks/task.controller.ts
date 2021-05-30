@@ -4,13 +4,12 @@ import asyncHandler from 'express-async-handler';
 
 import AppError from '../../classes/appError.class';
 import Task from './task.model';
-import { IBaseTask } from './task.type';
 
 import tasksService from './task.service';
 
 const create = asyncHandler(async (req: Request, res: Response) => {
   const { boardId } = req.params;
-  const task = await tasksService.create(boardId ?? '', req.body);
+  const task = await tasksService.create(boardId || '', req.body);
   if (!task) {
     throw new AppError('Task not create', StatusCodes.BAD_REQUEST, 'TASK_NOT_CREATE');
   }
@@ -19,13 +18,13 @@ const create = asyncHandler(async (req: Request, res: Response) => {
 
 const getAllByBoardId = asyncHandler(async (req: Request, res: Response) => {
   const { boardId } = req.params;
-  const tasks = await tasksService.getAllByBoardId(boardId ?? '');
+  const tasks = await tasksService.getAllByBoardId(boardId || '');
   return res.status(StatusCodes.OK).json(tasks.map(Task.toResponse));
 });
 
 const getByBoardIdAndTaskId = asyncHandler(async (req: Request, res: Response) => {
   const { boardId, taskId } = req.params;
-  const task = await tasksService.getByBoardIdAndTaskId(boardId ?? '', taskId ?? '');
+  const task = await tasksService.getByBoardIdAndTaskId(boardId || '', taskId || '');
   if (!task) {
     throw new AppError('Task not found', StatusCodes.NOT_FOUND, 'TASK_NOT_FOUND');
   }
@@ -34,8 +33,7 @@ const getByBoardIdAndTaskId = asyncHandler(async (req: Request, res: Response) =
 
 const updateByBoardIdAndTaskId = asyncHandler(async (req: Request, res: Response) => {
   const { boardId, taskId } = req.params;
-  const payload: IBaseTask = req.body;
-  const task = await tasksService.updateByBoardIdAndTaskId(boardId ?? '', taskId ?? '', payload);
+  const task = await tasksService.updateByBoardIdAndTaskId(boardId || '', taskId || '', req.body);
   if (!task) {
     throw new AppError('Task not found', StatusCodes.NOT_FOUND, 'TASK_NOT_FOUND');
   }
@@ -44,7 +42,7 @@ const updateByBoardIdAndTaskId = asyncHandler(async (req: Request, res: Response
 
 const deleteByBoardIdAndTaskId = asyncHandler(async (req: Request, res: Response) => {
   const { boardId, taskId } = req.params;
-  const task = await tasksService.deleteByBoardIdAndTaskId(boardId ?? '', taskId ?? '');
+  const task = await tasksService.deleteByBoardIdAndTaskId(boardId || '', taskId || '');
   if (!task) {
     throw new AppError('Task not found', StatusCodes.NOT_FOUND, 'TASK_NOT_FOUND');
   }
