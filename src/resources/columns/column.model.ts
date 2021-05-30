@@ -20,7 +20,7 @@ class Column implements IColumn {
 
   /**
    * Creates a column instance
-   * @param {Partial<IColumn>} column The column object
+   * @param column The column object
    */
   constructor({ id = uuid(), title = 'COLUMN', order = -1 }: Partial<IColumn> = {}) {
     this.id = id;
@@ -30,21 +30,10 @@ class Column implements IColumn {
 
   /**
    * Creates a column instance
-   * @async
-   *
-   * @param {IBaseColumn} payload The column object for create
-   * @returns {Promise<IColumn>} The column object
+   * @param payload The column object for create
+   * @returns The column object
    */
   static async create(payload: IBaseColumn): Promise<IColumn> {
-    return new Column(payload);
-  }
-
-  /**
-   * Creates a column instance
-   * @param {IBaseColumn} payload The column object for create
-   * @returns {IColumn} The column object
-   */
-  static createSync(payload: IBaseColumn): IColumn {
     return new Column(payload);
   }
 }
