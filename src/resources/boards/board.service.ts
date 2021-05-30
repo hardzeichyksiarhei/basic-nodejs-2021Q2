@@ -18,10 +18,8 @@ import { IBoard, IBaseBoard, IBaseBoardPartial } from './board.interface';
  * @returns The board object
  */
 const create = async (payload: IBaseBoard): Promise<IBoard> => {
-  const boardCreatable = {
-    ...payload,
-    columns: payload.columns?.map(Column.createSync),
-  };
+  const columns = await Promise.all(payload.columns?.map(Column.create) || []);
+  const boardCreatable = { ...payload, columns };
   return Board.create(boardCreatable);
 };
 
@@ -45,10 +43,8 @@ const getById = (id: string = ''): Promise<IBoard | null> => Board.getById(id);
  * @returns The board object
  */
 const updateById = async (id: string = '', payload: IBaseBoardPartial): Promise<IBoard | null> => {
-  const boardUpdatable = {
-    ...payload,
-    columns: payload.columns?.map(Column.createSync),
-  };
+  const columns = await Promise.all(payload.columns?.map(Column.create) || []);
+  const boardUpdatable = { ...payload, columns };
   return Board.updateById(id, boardUpdatable);
 };
 
