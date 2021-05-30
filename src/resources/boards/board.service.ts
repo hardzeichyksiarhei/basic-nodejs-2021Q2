@@ -14,8 +14,8 @@ import { IBoard, IBaseBoard, IBaseBoardPartial } from './board.interface';
 
 /**
  * Creates a board instance
- * @param {IBaseBoard} payload The board object for create
- * @returns {Promise<IBoard>} The board object
+ * @param payload The board object for create
+ * @returns The board object
  */
 const create = async (payload: IBaseBoard): Promise<IBoard> => {
   const boardCreatable = {
@@ -27,22 +27,22 @@ const create = async (payload: IBaseBoard): Promise<IBoard> => {
 
 /**
  * Gets all boards
- * @returns {Promise<IBoard[]>} The boards array
+ * @returns The boards array
  */
 const getAll = (): Promise<IBoard[]> => Board.getAll();
 
 /**
  * Gets a single board by its id field
- * @param {string} id The id of the board
- * @returns {Promise<?IBoard>} The board object or null
+ * @param id The id of the board
+ * @returns The board object or null
  */
 const getById = (id: string): Promise<IBoard | null> => Board.getById(id);
 
 /**
  * Updates a single board by its id field
- * @param {string} id The id of the board
- * @param {IBaseBoardPartial} payload The board object for update
- * @returns {Promise<?IBoard>} The board object
+ * @param id The id of the board
+ * @param payload The board object for update
+ * @returns The board object
  */
 const updateById = async (id: string, payload: IBaseBoardPartial): Promise<IBoard | null> => {
   const boardUpdatable = {
@@ -54,8 +54,8 @@ const updateById = async (id: string, payload: IBaseBoardPartial): Promise<IBoar
 
 /**
  * Deletes a single board by its id field
- * @param {string} id The id of the board
- * @returns {Promise<?IBoard>} The board object or null
+ * @param id The id of the board
+ * @returns The board object or null
  */
 const deleteById = async (id: string): Promise<IBoard | null> => {
   const boardDeleted = await Board.deleteById(id);
