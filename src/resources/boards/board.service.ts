@@ -36,7 +36,7 @@ const getAll = (): Promise<IBoard[]> => Board.getAll();
  * @param id The id of the board
  * @returns The board object or null
  */
-const getById = (id: string): Promise<IBoard | null> => Board.getById(id);
+const getById = (id: string = ''): Promise<IBoard | null> => Board.getById(id);
 
 /**
  * Updates a single board by its id field
@@ -44,7 +44,7 @@ const getById = (id: string): Promise<IBoard | null> => Board.getById(id);
  * @param payload The board object for update
  * @returns The board object
  */
-const updateById = async (id: string, payload: IBaseBoardPartial): Promise<IBoard | null> => {
+const updateById = async (id: string = '', payload: IBaseBoardPartial): Promise<IBoard | null> => {
   const boardUpdatable = {
     ...payload,
     columns: payload.columns?.map(Column.createSync),
@@ -57,7 +57,7 @@ const updateById = async (id: string, payload: IBaseBoardPartial): Promise<IBoar
  * @param id The id of the board
  * @returns The board object or null
  */
-const deleteById = async (id: string): Promise<IBoard | null> => {
+const deleteById = async (id: string = ''): Promise<IBoard | null> => {
   const boardDeleted = await Board.deleteById(id);
 
   if (boardDeleted) {
