@@ -14,8 +14,8 @@ const { boards } = db;
 
 /**
  * Adds an board object to the end of the boards collection
- * @param {IBoard} task The board to add in repository
- * @returns {Promise<IBoard>} The board who was added to the repository
+ * @param task The board to add in repository
+ * @returns The board who was added to the repository
  */
 const add = async (board: IBoard): Promise<IBoard> => {
   boards.push(board);
@@ -24,14 +24,14 @@ const add = async (board: IBoard): Promise<IBoard> => {
 
 /**
  * Gets all boards
- * @returns {Promise<TBoard[]>} The boards array
+ * @returns The boards array
  */
 const all = async (): Promise<IBoard[]> => boards;
 
 /**
  * Removes a single board by its id field
- * @param {TBoard} board The board object
- * @returns {Promise<?TBoard>} The board object or null
+ * @param board The board object
+ * @returns The board object or null
  */
 const remove = async ({ id }: IBoard): Promise<IBoard | null> => {
   const idx = boards.findIndex((board) => board.id === id);

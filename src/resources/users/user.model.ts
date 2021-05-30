@@ -24,7 +24,7 @@ class User implements IUser {
 
   /**
    * Creates a user instance
-   * @param {IBaseUserPartial} user The user object
+   * @param user The user object
    */
   constructor({ name = 'USER', login = 'user', password = 'P@55w0rd' }: IBaseUserPartial = {}) {
     this.id = uuid();
@@ -35,8 +35,8 @@ class User implements IUser {
 
   /**
    * Creates a user instance and adds to the collection
-   * @param {IBaseUser} payload The user object for create
-   * @returns {Promise<IUser>} The user object
+   * @param payload The user object for create
+   * @returns The user object
    */
   static async create(payload: IBaseUser): Promise<IUser> {
     const user = new User(payload);
@@ -46,7 +46,7 @@ class User implements IUser {
 
   /**
    * Gets all users
-   * @returns {Promise<IUser[]>} The users array
+   * @returns The users array
    */
   static async getAll(): Promise<IUser[]> {
     const users = await usersRepo.all();
@@ -55,8 +55,8 @@ class User implements IUser {
 
   /**
    * Gets a single user by its id field
-   * @param {string} id The id of the user
-   * @returns {Promise<?IUser>} The user object or null
+   * @param id The id of the user
+   * @returns The user object or null
    */
   static async getById(id: string): Promise<IUser | null> {
     const users = await usersRepo.all();
@@ -67,9 +67,9 @@ class User implements IUser {
 
   /**
    * Updates a single user by its id field
-   * @param {string} id The id of the user
-   * @param {IBaseUserPartial} payload The user object for update
-   * @returns {Promise<?IUser>} The user object or null
+   * @param id The id of the user
+   * @param payload The user object for update
+   * @returns The user object or null
    */
   static async updateById(id: string, payload: IBaseUserPartial): Promise<IUser | null> {
     const user = await User.getById(id);
@@ -79,8 +79,8 @@ class User implements IUser {
 
   /**
    * Updates a user
-   * @param {IBaseUserPartial} payload The user object for update
-   * @returns {Promise<IUser>} The user object
+   * @param payload The user object for update
+   * @returns The user object
    */
   async update(payload: IBaseUserPartial): Promise<IUser> {
     const { name, login, password } = payload;
@@ -93,8 +93,8 @@ class User implements IUser {
 
   /**
    * Deletes a single user by its id field
-   * @param {string} id The id of the user
-   * @returns {Promise<?IUser>} The user object or null
+   * @param id The id of the user
+   * @returns The user object or null
    */
   static async deleteById(id: string): Promise<IUser | null> {
     const user = await User.getById(id);
@@ -104,8 +104,8 @@ class User implements IUser {
 
   /**
    * Gets a single user for API response
-   * @param {IUser} user The user object
-   * @returns {IBaseUserResponse} The user object for response
+   * @param user The user object
+   * @returns The user object for response
    */
   static toResponse(user: IUser): IBaseUserResponse {
     const { id, name, login } = user;

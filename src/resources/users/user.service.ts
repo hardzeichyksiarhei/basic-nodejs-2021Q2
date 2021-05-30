@@ -13,39 +13,39 @@ import Task from '../tasks/task.model';
 
 /**
  * Creates a user instance
- * @param {IBaseUser} payload The task object for create
- * @returns {Promise<IUser>} The task object
+ * @param payload The task object for create
+ * @returns The task object
  */
 const create = async (payload: IBaseUser): Promise<IUser> => User.create(payload);
 
 /**
  * Gets all users
- * @returns {Promise<IUser[]>} The users array
+ * @returns The users array
  */
 const getAll = async (): Promise<IUser[]> => User.getAll();
 
 /**
  * Gets a single user by its id field
- * @param {string} id The id of the user
- * @returns {Promise<IUser | null>} The user object
+ * @param id The id of the user
+ * @returns The user object or null
  */
-const getById = async (id: string): Promise<IUser | null> => User.getById(id);
+const getById = async (id: string = ''): Promise<IUser | null> => User.getById(id);
 
 /**
  * Updates a single user by its id field
- * @param {string} id The id of the user
- * @param {IBaseUserPartial} payload The user object for update
- * @returns {Promise<IUser | null>} The user object
+ * @param id The id of the user
+ * @param payload The user object for update
+ * @returns The user object or null
  */
-const updateById = async (id: string, payload: IBaseUserPartial): Promise<IUser | null> =>
+const updateById = async (id: string = '', payload: IBaseUserPartial): Promise<IUser | null> =>
   User.updateById(id, payload);
 
 /**
  * Deletes a single user by its id field
- * @param {string} id The id of the user
- * @returns {Promise<?IUser>} The user object or null
+ * @param id The id of the user
+ * @returns The user object or null
  */
-const deleteById = async (id: string): Promise<IUser | null> => {
+const deleteById = async (id: string = ''): Promise<IUser | null> => {
   const userDeleted = await User.deleteById(id);
 
   if (userDeleted) {

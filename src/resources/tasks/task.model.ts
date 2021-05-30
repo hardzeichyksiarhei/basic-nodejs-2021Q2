@@ -29,7 +29,7 @@ class Task implements ITask {
 
   /**
    * Creates a task instance
-   * @param {ITask} task The task object
+   * @param task The task object
    */
   constructor({
     title = 'TASK',
@@ -50,8 +50,8 @@ class Task implements ITask {
 
   /**
    * Creates a task instance and adds to the tasks collection
-   * @param {IBaseTask} payload The task object for create
-   * @returns {Promise<ITask>} The task object
+   * @param payload The task object for create
+   * @returns The task object
    */
   static async create(payload: IBaseTask): Promise<ITask> {
     const task = new Task(payload);
@@ -61,8 +61,8 @@ class Task implements ITask {
 
   /**
    * Gets a single task by its id field
-   * @param {string} id The id of the task
-   * @returns {Promise<?ITask>} The task object
+   * @param id The id of the task
+   * @returns The task object
    */
   static async getById(id: string): Promise<ITask | null> {
     const tasks = await tasksRepo.all();
@@ -73,8 +73,8 @@ class Task implements ITask {
 
   /**
    * Gets all tasks by its boardId and taskId fields
-   * @param {string} boardId The id of the board
-   * @returns {Promise<ITask[]>} The tasks array
+   * @param boardId The id of the board
+   * @returns The tasks array
    */
   static async getAllByBoardId(boardId: string): Promise<ITask[]> {
     const tasks = await tasksRepo.all();
@@ -83,9 +83,9 @@ class Task implements ITask {
 
   /**
    * Gets a single task by its boardId and taskId fields
-   * @param {string} boardId The id of the board
-   * @param {string} taskId The id of the task
-   * @returns {Promise<?ITask>} The task object or null
+   * @param boardId The id of the board
+   * @param taskId The id of the task
+   * @returns The task object or null
    */
   static async getByBoardIdAndTaskId(boardId: string, taskId: string): Promise<ITask | null> {
     const tasks = await tasksRepo.all();
@@ -96,9 +96,9 @@ class Task implements ITask {
 
   /**
    * Updates a single task by its id field
-   * @param {string} id The id of the task
-   * @param {IBaseTaskPartial} payload The task object for update
-   * @returns {Promise<?ITask>} The task object or null
+   * @param id The id of the task
+   * @param payload The task object for update
+   * @returns The task object or null
    */
   static async updateById(id: string, payload: IBaseTaskPartial): Promise<ITask | null> {
     const task = await Task.getById(id);
@@ -108,10 +108,10 @@ class Task implements ITask {
 
   /**
    * Updates a single task by boardId and taskId fields
-   * @param {string} boardId The id of the board
-   * @param {string} taskId The id of the task
-   * @param {IBaseTaskPartial} payload The task object for update
-   * @returns {Promise<?ITask>} The task object or null
+   * @param boardId The id of the board
+   * @param taskId The id of the task
+   * @param payload The task object for update
+   * @returns The task object or null
    */
   static async updateByBoardIdAndTaskId(
     boardId: string,
@@ -125,8 +125,8 @@ class Task implements ITask {
 
   /**
    * Updates a task
-   * @param {IBaseTaskPartial} payload The task object for update
-   * @returns {Promise<ITask>} The task object
+   * @param payload The task object for update
+   * @returns The task object
    */
   async update(payload: IBaseTaskPartial): Promise<ITask> {
     const { title, order, description, userId, boardId, columnId } = payload;
@@ -142,8 +142,8 @@ class Task implements ITask {
 
   /**
    * Retrieves all the elements that match the conditions defined by the specified predicate
-   * @param {Function} callback The predicate that defines the conditions of the elements to search for
-   * @returns {Promise<ITask>} A array containing all the elements that match the conditions defined by the specified predicate, if found; otherwise, an empty array
+   * @param callback The predicate that defines the conditions of the elements to search for
+   * @returns A array containing all the elements that match the conditions defined by the specified predicate, if found; otherwise, an empty array
    */
   static async findAll(callback: {
     (value: ITask, index?: number, array?: ITask[]): boolean;
@@ -155,9 +155,9 @@ class Task implements ITask {
 
   /**
    * Deletes a single task by boardId and taskId fields
-   * @param {string} boardId The id of the board
-   * @param {string} taskId The id of the task
-   * @returns {Promise<?ITask>} The task object or null
+   * @param boardId The id of the board
+   * @param taskId The id of the task
+   * @returns The task object or null
    */
   static async deleteByBoardIdAndTaskId(boardId: string, taskId: string): Promise<ITask | null> {
     const task = await Task.getByBoardIdAndTaskId(boardId, taskId);
@@ -167,8 +167,8 @@ class Task implements ITask {
 
   /**
    * Gets a single task for API response
-   * @param {ITask} task The task object
-   * @returns {IBaseTaskResponse} The task object for response
+   * @param task The task object
+   * @returns The task object for response
    */
   static toResponse(task: ITask): IBaseTaskResponse {
     const { id, title, order, description, userId, boardId, columnId } = task;

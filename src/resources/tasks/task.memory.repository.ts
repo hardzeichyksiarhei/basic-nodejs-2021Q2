@@ -14,8 +14,8 @@ const { tasks } = db;
 
 /**
  * Adds an task object to the end of the tasks collection
- * @param {ITask} task The task to add in repository
- * @returns {Promise<ITask>} The task who was added to the repository
+ * @param task The task to add in repository
+ * @returns The task who was added to the repository
  */
 const add = async (task: ITask): Promise<ITask> => {
   tasks.push(task);
@@ -24,14 +24,14 @@ const add = async (task: ITask): Promise<ITask> => {
 
 /**
  * Gets all tasks
- * @returns {Promise<ITask[]>} The tasks array
+ * @returns The tasks array
  */
 const all = async (): Promise<ITask[]> => tasks;
 
 /**
  * Removes a single task by its id field
- * @param {ITask} task The task object
- * @returns {Promise<?ITask>} The task object or null
+ * @param task The task object
+ * @returns The task object or null
  */
 const remove = async ({ id }: ITask): Promise<ITask | null> => {
   const idx = tasks.findIndex((task) => task.id === id);

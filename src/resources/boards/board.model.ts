@@ -23,7 +23,7 @@ class Board implements IBoard {
 
   /**
    * Creates a board instance
-   * @param {IBaseBoardPartial} board The board object
+   * @param board The board object
    */
   constructor({ title = 'BOARD', columns = [] }: IBaseBoardPartial = {}) {
     this.id = uuid();
@@ -33,8 +33,8 @@ class Board implements IBoard {
 
   /**
    * Creates a board instance and adds to the collection
-   * @param {IBaseBoard} payload The board object for create
-   * @returns {Promise<IBoard>} The board object
+   * @param payload The board object for create
+   * @returns The board object
    */
   static async create(payload: IBaseBoard): Promise<IBoard> {
     const board = new Board(payload);
@@ -44,7 +44,7 @@ class Board implements IBoard {
 
   /**
    * Gets all boards
-   * @returns {Promise<IBoard[]>} The boards array
+   * @returns The boards array
    */
   static async getAll(): Promise<IBoard[]> {
     const boards = await boardsRepo.all();
@@ -53,8 +53,8 @@ class Board implements IBoard {
 
   /**
    * Gets a single board by its id field
-   * @param {string} id The id of the board
-   * @returns {Promise<?IBoard>} The board object or null
+   * @param id The id of the board
+   * @returns The board object or null
    */
   static async getById(id: string): Promise<IBoard | null> {
     const boards = await boardsRepo.all();
@@ -65,9 +65,9 @@ class Board implements IBoard {
 
   /**
    * Updates a single board by its id field
-   * @param {string} id The id of the board
-   * @param {IBaseBoardPartial} payload The board object for update
-   * @returns {Promise<?IBoard>} The board object or null
+   * @param id The id of the board
+   * @param payload The board object for update
+   * @returns The board object or null
    */
   static async updateById(id: string, payload: IBaseBoardPartial): Promise<IBoard | null> {
     const board = await Board.getById(id);
@@ -77,8 +77,8 @@ class Board implements IBoard {
 
   /**
    * Updates a board
-   * @param {IBaseBoardPartial} payload The board object for update
-   * @returns {Promise<IBoard>} The board object
+   * @param payload The board object for update
+   * @returns The board object
    */
   async update(payload: IBaseBoardPartial): Promise<IBoard> {
     const { title, columns } = payload;
@@ -90,8 +90,8 @@ class Board implements IBoard {
 
   /**
    * Deletes a single board by its id field
-   * @param {string} id The id of the board
-   * @returns {Promise<?IBoard>} The board object or null
+   * @param id The id of the board
+   * @returns The board object or null
    */
   static async deleteById(id: string): Promise<IBoard | null> {
     const board = await Board.getById(id);
@@ -101,8 +101,8 @@ class Board implements IBoard {
 
   /**
    * Gets a single board for API response
-   * @param {IBoard} user The board object
-   * @returns {IBoard} The board object for response
+   * @param user The board object
+   * @returns The board object for response
    */
   static toResponse(board: IBoard): IBaseBoardResponse {
     const { id, title, columns } = board;

@@ -14,8 +14,8 @@ const { users } = db;
 
 /**
  * Adds an user object to the end of the users collection
- * @param {IUser} user The user to add in repository
- * @returns {Promise<IUser>} The user who was added to the repository
+ * @param user The user to add in repository
+ * @returns The user who was added to the repository
  */
 const add = async (user: IUser): Promise<IUser> => {
   users.push(user);
@@ -23,15 +23,15 @@ const add = async (user: IUser): Promise<IUser> => {
 };
 
 /**
- * Gets all users
- * @returns {Promise<IUser[]>} The users array
+ * Gets all userss
+ * @returns The users array
  */
 const all = async (): Promise<IUser[]> => users;
 
 /**
  * Removes a single user by its id field
- * @param {TUser} user The user object
- * @returns {?TUser} The user object or null
+ * @param user The user object
+ * @returns The user object or null
  */
 const remove = async ({ id }: IUser): Promise<IUser | null> => {
   const idx = users.findIndex((user) => user.id === id);
