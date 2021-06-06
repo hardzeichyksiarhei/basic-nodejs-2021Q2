@@ -6,7 +6,7 @@ morgan.token('query', (req: Request) => JSON.stringify(req.query));
 morgan.token('params', (req: Request) => JSON.stringify(req.params));
 morgan.token('body', (req: Request) => JSON.stringify(req.body));
 
-morgan.token('error-message', (_req: Request, res: Response) => res.errorMessage);
+morgan.token('error-message', (_req: Request, res: Response) => res.errorMessage || 'Error');
 
 const successFormat = ':method :url :status :query :params :body - :response-time ms';
 const errorFormat = ':method :url :status - :response-time ms - :error-message';
