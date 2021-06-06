@@ -7,7 +7,7 @@ const { NODE_ENV } = config;
 const logger = createLogger({
   format: format.combine(
     format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    format.printf((info) => `${info['timestamp']} ${info.level}: ${info.message}`)
+    format.printf(({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`)
   ),
   transports: [
     new transports.File({ filename: './logs/errors.log', level: 'error' }),
