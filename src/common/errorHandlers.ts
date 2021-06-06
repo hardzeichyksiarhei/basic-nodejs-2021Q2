@@ -9,16 +9,28 @@ const isOperationalError = (error: Error) => {
   return false;
 };
 
-const uncaughtExceptionHandler = (server: Server) => (error: Error) => {
-  logger.error(`uncaughtException: ${error.message}\n${error.stack}`, () => {
-    if (!isOperationalError(error)) server.close(() => process.exit(1));
+const killProcess = (server: Server) => setTimeout(() => server.close(() => process.exit(1)), 100);
+
+const uncaughtExceptionHandler = (server: Server, isProcessExit: boolean = false) => (
+  error: Error
+) => {
+  logger.error(`uncaughtException: ${error.message}\n${error.stack}`);
+
+  logger.on('finish', () => {
+    if (isProcessExit && !isOperationalError(error)) killProcess(server);
   });
+  logger.end();
 };
 
-const unhandledRejectionHandler = (server: Server) => async (error: Error) => {
-  logger.error(`unhandledRejection: ${error.message}\n${error.stack}`, () => {
-    if (!isOperationalError(error)) server.close(() => process.exit(1));
+const unhandledRejectionHandler = (server: Server, isProcessExit: boolean = false) => async (
+  error: Error
+) => {
+  logger.error(`unhandledRejection: ${error.message}\n${error.stack}`);
+
+  logger.on('finish', () => {
+    if (isProcessExit && !isOperationalError(error)) killProcess(server);
   });
+  logger.end();
 };
 
 export { uncaughtExceptionHandler, unhandledRejectionHandler };
