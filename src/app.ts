@@ -33,7 +33,6 @@ app.use('/boards', boardRouter);
 app.use('/boards', taskRouter);
 
 app.use(notFound);
-
 app.use(errorLogger);
 
 export default app;
