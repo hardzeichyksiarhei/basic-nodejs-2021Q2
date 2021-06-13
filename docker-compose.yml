@@ -13,6 +13,8 @@ services:
     environment:
       - PORT=${PORT}
     restart: always # OR on-failure
+    networks:
+      - app-bridge
 
   postgres:
     build: ./database/
