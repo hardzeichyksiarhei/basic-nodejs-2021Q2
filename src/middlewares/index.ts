@@ -1,5 +1,6 @@
 import validate from './validate';
 import notFound from './notFound';
-import errorHandler from './errorHandler';
+import { errorLogger } from './errorLogger';
+import { successHttpLogger, errorHttpLogger } from './httpLogger';
 
-export { validate, notFound, errorHandler };
+export { validate, notFound, successHttpLogger, errorHttpLogger, errorLogger };
