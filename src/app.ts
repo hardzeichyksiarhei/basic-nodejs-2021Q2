@@ -25,6 +25,7 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+
 app.use(successHttpLogger);
 app.use(errorHttpLogger);
 
@@ -33,7 +34,7 @@ app.use('/boards', boardRouter);
 app.use('/boards', taskRouter);
 
 app.use(notFound);
-
 app.use(errorLogger);
+
 
 export default app;
