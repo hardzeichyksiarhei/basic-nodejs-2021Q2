@@ -12,7 +12,7 @@ services:
       - postgres
     environment:
       - PORT=${PORT}
-    restart: always
+    restart: always # OR on-failure
 
   postgres:
     build: ./database/
