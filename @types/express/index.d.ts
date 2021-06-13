@@ -4,6 +4,6 @@ declare namespace Express {
   }
   interface Response {
     [key: string]: any;
-    errorMessage?: string;
+    errorMessage?: any;
   }
 }
