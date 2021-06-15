@@ -3,6 +3,6 @@ declare namespace Express {
     user?: import('../../src/resources/users/user.interface').IUser;
   }
   interface Response {
-    errorMessage?: string;
+    errorMessage: string;
   }
 }
