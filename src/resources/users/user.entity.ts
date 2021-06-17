@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import bcrypt from 'bcrypt';
+import { Entity, PrimaryColumn, Column, BeforeInsert } from 'typeorm';
 
 @Entity({ name: 'users' })
 class User {
@@ -14,6 +15,11 @@ class User {
 
   @Column('varchar')
   password!: string;
+
+  @BeforeInsert()
+  generatePasswordHash() {
+    this.password = bcrypt.hashSync(this.password, 10);
+  }
 
   static toResponse({ id, login, name }: User) {
     return { id, login, name };
