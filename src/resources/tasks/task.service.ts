@@ -1,68 +1,48 @@
-/**
- * @file   This file define the task services
- * @author hardz
- * @since  1.0.0
- *
- * @namespace Tasks
- */
+import { getCustomRepository } from 'typeorm';
+import Task from './task.entity';
 
-import Task from './task.model';
+import { TaskRepository } from './task.repository';
 
-import { ITask, IBaseTask, IBaseTaskPartial } from './task.type';
-
-/**
- * Creates a task instance
- * @param boardId The id of the board
- * @param payload The task object for create
- * @returns The task object
- */
-const create = async (boardId: string = '', payload: IBaseTask): Promise<ITask> => {
+const create = async (boardId: string, payload: Omit<Task, 'id'>): Promise<Task> => {
+  const taskRepository = getCustomRepository(TaskRepository);
   const taskCreatable = { ...payload, boardId };
-  return Task.create(taskCreatable);
+  const task = taskRepository.createTask(taskCreatable);
+  return taskRepository.save(task);
 };
 
-/**
- * Gets all tasks by its boardId and taskId fields
- * @param boardId The id of the board
- * @returns The tasks array
- */
-const getAllByBoardId = async (boardId: string = ''): Promise<ITask[]> =>
-  Task.getAllByBoardId(boardId);
+const getAllByBoardId = async (boardId: string): Promise<Task[]> => {
+  const taskRepository = getCustomRepository(TaskRepository);
+  return taskRepository.getAllTasksByBoardId(boardId);
+};
 
-/**
- * Gets a single task by its boardId and taskId fields
- * @param boardId The id of the board
- * @param taskId The id of the task
- * @returns The task object
- */
-const getByBoardIdAndTaskId = async (
-  boardId: string = '',
-  taskId: string = ''
-): Promise<ITask | null> => Task.getByBoardIdAndTaskId(boardId, taskId);
+const getByBoardIdAndTaskId = async (boardId: string, taskId: string): Promise<Task | null> => {
+  const taskRepository = getCustomRepository(TaskRepository);
+  const task = await taskRepository.getTaskByBoardIdAndTaskId(boardId, taskId);
+  if (!task) return null;
+  return task;
+};
 
-/**
- * Updates a single task by boardId and taskId fields
- * @param boardId The id of the board
- * @param taskId The id of the task
- * @param payload The task object for update
- * @returns The task object
- */
 const updateByBoardIdAndTaskId = async (
-  boardId: string = '',
-  taskId: string = '',
-  payload: IBaseTaskPartial
-): Promise<ITask | null> => Task.updateByBoardIdAndTaskId(boardId, taskId, payload);
+  boardId: string,
+  taskId: string,
+  payload: Partial<Omit<Task, 'id'>>
+): Promise<Task | null> => {
+  const taskRepository = getCustomRepository(TaskRepository);
+  await taskRepository.updateTaskByBoardIdAndTaskId(boardId, taskId, payload);
+  const task = await taskRepository.getTaskByBoardIdAndTaskId(boardId, taskId);
+  if (!task) return null;
+  return task;
+};
 
-/**
- * Deletes a single task by boardId and taskId fields
- * @param boardId The id of the board
- * @param taskId The id of the task
- * @returns The task object or null
- */
-const deleteByBoardIdAndTaskId = async (
-  boardId: string = '',
-  taskId: string = ''
-): Promise<ITask | null> => Task.deleteByBoardIdAndTaskId(boardId, taskId);
+const deleteByBoardIdAndTaskId = async (boardId: string, taskId: string): Promise<Task | null> => {
+  const taskRepository = getCustomRepository(TaskRepository);
+  const taskDeletable = await taskRepository.getTaskByBoardIdAndTaskId(boardId, taskId);
+  if (!taskDeletable) return null;
+
+  await taskRepository.deleteTaskByBoardIdAndTaskId(boardId, taskId);
+
+  return taskDeletable;
+};
 
 export default {
   create,
