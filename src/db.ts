@@ -1,9 +1,6 @@
 import { getConnection, createConnection } from 'typeorm';
-import { IUser } from './resources/users/user.interface';
-import { IBoard } from './resources/boards/board.interface';
-import { ITask } from './resources/tasks/task.type';
 
-import { config } from './common/ormconfig';
+import ormconfig from './common/ormconfig';
 
 export const connectDB = async () => {
   let connection = null;
@@ -18,7 +15,7 @@ export const connectDB = async () => {
     if (connection && !connection.isConnected) {
       await connection.connect();
     } else {
-      await createConnection(config);
+      await createConnection(ormconfig);
     }
 
     console.log('Succesfully DB connected');
@@ -28,8 +25,4 @@ export const connectDB = async () => {
   }
 };
 
-const users: IUser[] = [];
-const boards: IBoard[] = [];
-const tasks: ITask[] = [];
-
-export default { users, boards, tasks, connectDB };
+export default { connectDB };
