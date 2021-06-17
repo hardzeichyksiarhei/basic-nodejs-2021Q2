@@ -21,6 +21,6 @@ export default {
   entities: [path.join(__dirname, '../**/*.entity.ts')],
 
   migrationsTableName: 'migrations',
-  migrations: [path.join(__dirname, '../migrations/*.ts')],
+  migrations: [path.join(__dirname, '../../database/migrations/*.ts')],
   cli: { migrationsDir: 'src/migrations' },
 } as ConnectionOptions;
