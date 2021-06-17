@@ -12,11 +12,9 @@ export const errorLogger = (error: Error, _req: Request, res: Response, next: Ne
 
     const message = error.message || 'Error';
 
-    res.errorMessage = message;
     logger.error(`${status} ${error.message}`);
     res.status(statusCode).json({ status, code, message });
   } else {
-    res.errorMessage = error.message || 'Error';
     logger.error(`${error.message}\n${error.stack}`);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
   }
