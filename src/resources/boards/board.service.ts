@@ -1,67 +1,61 @@
-/**
- * @file   This file define the board services
- * @author hardz
- * @since  1.0.0
- *
- * @namespace Boards
- */
+import { getCustomRepository } from 'typeorm';
 
-import Board from './board.model';
+import Board from './board.entity';
 import Column from '../columns/column.model';
-import Task from '../tasks/task.model';
 
-import { IBoard, IBaseBoard, IBaseBoardPartial } from './board.interface';
+import { BoardRepository } from './board.repository';
+import { TaskRepository } from '../tasks/task.repository';
 
-/**
- * Creates a board instance
- * @param payload The board object for create
- * @returns The board object
- */
-const create = async (payload: IBaseBoard): Promise<IBoard> => {
+const create = async (payload: Omit<Board, 'id'>): Promise<Board> => {
+  const boardRepository = getCustomRepository(BoardRepository);
+
   const columns = await Promise.all(payload.columns?.map(Column.create) || []);
   const boardCreatable = { ...payload, columns };
-  return Board.create(boardCreatable);
+  const board = boardRepository.createBoard(boardCreatable);
+  await boardRepository.save(board);
+  return board;
 };
 
-/**
- * Gets all boards
- * @returns The boards array
- */
-const getAll = (): Promise<IBoard[]> => Board.getAll();
+const getAll = async (): Promise<Board[]> => {
+  const boardRepository = getCustomRepository(BoardRepository);
+  return boardRepository.getAllBoards();
+};
 
-/**
- * Gets a single board by its id field
- * @param id The id of the board
- * @returns The board object or null
- */
-const getById = (id: string = ''): Promise<IBoard | null> => Board.getById(id);
+const getById = async (id: string): Promise<Board | null> => {
+  const boardRepository = getCustomRepository(BoardRepository);
 
-/**
- * Updates a single board by its id field
- * @param id The id of the board
- * @param payload The board object for update
- * @returns The board object
- */
-const updateById = async (id: string = '', payload: IBaseBoardPartial): Promise<IBoard | null> => {
+  const board = await boardRepository.getBoardById(id);
+  if (!board) return null;
+  return board;
+};
+
+const updateById = async (
+  id: string,
+  payload: Partial<Omit<Board, 'id'>>
+): Promise<Board | null> => {
+  const boardRepository = getCustomRepository(BoardRepository);
+
   const columns = await Promise.all(payload.columns?.map(Column.create) || []);
   const boardUpdatable = { ...payload, columns };
-  return Board.updateById(id, boardUpdatable);
+  await boardRepository.updateBoardById(id, boardUpdatable);
+
+  const board = await boardRepository.getBoardById(id);
+  if (!board) return null;
+  return board;
 };
 
-/**
- * Deletes a single board by its id field
- * @param id The id of the board
- * @returns The board object or null
- */
-const deleteById = async (id: string = ''): Promise<IBoard | null> => {
-  const boardDeleted = await Board.deleteById(id);
+const deleteById = async (id: string): Promise<Board | null> => {
+  const boardRepository = getCustomRepository(BoardRepository);
 
-  if (boardDeleted) {
-    const tasks = await Task.findAll((task) => task.boardId === boardDeleted.id);
-    tasks.forEach((task) => Task.updateById(task.id, { boardId: null }));
-  }
+  const boardDeletable = await boardRepository.getBoardById(id);
+  if (!boardDeletable) return null;
 
-  return boardDeleted;
+  await boardRepository.deleteBoardById(id);
+
+  const taskRepository = getCustomRepository(TaskRepository);
+  await taskRepository.update({ boardId: id }, { boardId: null });
+
+  return boardDeletable;
 };
 
 export default { create, getAll, getById, updateById, deleteById };

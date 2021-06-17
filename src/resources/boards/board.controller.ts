@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import asyncHandler from 'express-async-handler';
 
 import AppError from '../../classes/appError.class';
-import Board from './board.model';
+import Board from './board.entity';
 import boardsService from './board.service';
 
 const create = asyncHandler(async (req: Request, res: Response) => {
@@ -21,7 +21,7 @@ const getAll = asyncHandler(async (_: Request, res: Response) => {
 
 const getById = asyncHandler(async (req: Request, res: Response) => {
   const { boardId } = req.params;
-  const board = await boardsService.getById(boardId);
+  const board = await boardsService.getById(boardId!);
   if (!board) {
     throw new AppError('Board not found', StatusCodes.NOT_FOUND, 'BOARD_NOT_FOUND');
   }
@@ -30,7 +30,7 @@ const getById = asyncHandler(async (req: Request, res: Response) => {
 
 const updateById = asyncHandler(async (req: Request, res: Response) => {
   const { boardId } = req.params;
-  const board = await boardsService.updateById(boardId, req.body);
+  const board = await boardsService.updateById(boardId!, req.body);
   if (!board) {
     throw new AppError('Board not found', StatusCodes.NOT_FOUND, 'BOARD_NOT_FOUND');
   }
@@ -39,7 +39,7 @@ const updateById = asyncHandler(async (req: Request, res: Response) => {
 
 const deleteById = asyncHandler(async (req: Request, res: Response) => {
   const { boardId } = req.params;
-  const board = await boardsService.deleteById(boardId);
+  const board = await boardsService.deleteById(boardId!);
   if (!board) {
     throw new AppError('Board not found', StatusCodes.NOT_FOUND, 'BOARD_NOT_FOUND');
   }
