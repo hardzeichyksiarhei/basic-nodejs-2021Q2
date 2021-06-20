@@ -1,11 +1,10 @@
-import { v4 as uuid } from 'uuid';
 import bcrypt from 'bcrypt';
-import { Entity, PrimaryColumn, Column, BeforeInsert } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
 
 @Entity({ name: 'users' })
 class User {
-  @PrimaryColumn('varchar')
-  id: string = uuid();
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column('varchar', { default: '' })
   name: string = '';

@@ -1,12 +1,11 @@
-import { v4 as uuid } from 'uuid';
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 import BoardColumn from '../columns/column.model';
 
 @Entity({ name: 'boards' })
 class Board {
-  @PrimaryColumn()
-  id: string = uuid();
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column('varchar')
   title: string = 'Board';
