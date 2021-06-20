@@ -1,10 +1,9 @@
-import { v4 as uuid } from 'uuid';
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity({ name: 'tasks' })
 class Task {
-  @PrimaryColumn()
-  id: string = uuid();
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column('varchar')
   title: string = 'Task';
