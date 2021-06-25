@@ -4,11 +4,12 @@ import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
 
+import authRouter from './resources/auth/auth.router';
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
 
-import { notFound, successHttpLogger, errorHttpLogger, errorLogger } from './middlewares';
+import { notFound, auth, successHttpLogger, errorHttpLogger, errorLogger } from './middlewares';
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -28,9 +29,10 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
 app.use(successHttpLogger);
 app.use(errorHttpLogger);
 
-app.use('/users', userRouter);
-app.use('/boards', boardRouter);
-app.use('/boards', taskRouter);
+app.use('/', authRouter);
+app.use('/users', auth, userRouter);
+app.use('/boards', auth, boardRouter);
+app.use('/boards', auth, taskRouter);
 
 app.use(notFound);
 app.use(errorLogger);
