@@ -39,8 +39,6 @@ export const auth = asyncHandler(async (req: Request, _res: Response, next: Next
 
     const user = await userRepository.getUserById(decoded.userId);
     if (!user) throw new Error('Not authorized to access this resource. Token is not valid');
-
-    req.user = user;
   } catch (error) {
     throw new AppError(error.message, StatusCodes.UNAUTHORIZED, 'UNAUTHORIZED');
   }
