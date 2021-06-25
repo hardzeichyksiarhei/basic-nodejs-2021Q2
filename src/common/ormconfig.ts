@@ -23,4 +23,7 @@ export default {
   migrationsTableName: 'migrations',
   migrations: [path.join(__dirname, '../../database/migrations/*.ts')],
   cli: { migrationsDir: 'src/migrations' },
+
+  seeds: [path.join(__dirname, '../../database/seeds/*.ts')],
+  factories: [path.join(__dirname, '../../database/factories/*.ts')],
 } as ConnectionOptions;
