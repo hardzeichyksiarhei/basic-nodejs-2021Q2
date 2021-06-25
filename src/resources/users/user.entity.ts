@@ -1,5 +1,10 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
+
+import config from '../../common/config';
+
+const { JWT_SECRET_KEY } = config;
 
 @Entity({ name: 'users' })
 class User {
@@ -9,7 +14,7 @@ class User {
   @Column('varchar', { default: '' })
   name: string = '';
 
-  @Column('varchar')
+  @Column('varchar', { unique: true })
   login!: string;
 
   @Column('varchar')
@@ -18,6 +23,13 @@ class User {
   @BeforeInsert()
   generatePasswordHash() {
     this.password = bcrypt.hashSync(this.password, 10);
+  }
+
+  async generateAuthToken() {
+    const token = jwt.sign({ userId: this.id, login: this.login }, JWT_SECRET_KEY, {
+      expiresIn: '1h',
+    });
+    return token;
   }
 
   static toResponse({ id, login, name }: User) {
