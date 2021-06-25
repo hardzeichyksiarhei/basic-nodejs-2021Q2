@@ -1,4 +1,6 @@
 declare namespace Express {
-  interface Request {}
+  interface Request {
+    user?: import('../../src/resources/users/user.entity').default;
+  }
   interface Response {}
 }
