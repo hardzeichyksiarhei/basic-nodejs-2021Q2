@@ -1,1 +1,3 @@
 database/migrations
+database/factories
+database/seeds
